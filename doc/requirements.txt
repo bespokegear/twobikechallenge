@@ -1,0 +1,40 @@
+Pedal powered game with two pedal generators
+
+* Hardware:
+** Arduino Nano
+** 2 x Pedal powered generators
+** 2 x WS2811 LED strips
+** 3 digit 7-segment LED display for timer
+** Push button
+** Power supply
+
+* Inputs:
+** Reset switch (pin=D2)
+** 2 x analog pins for voltage measuement,  r1=10k r2=560k (pins: A0 & A1)
+** Internal voltage for brownout detection, r1=10k r2=100k (pin: A6)
+
+* Outputs:
+** 2 x LED data pins (pins: D3 & D4)
+** SLatch, SCLK, SData to control LED display
+
+* Program flow:
+** Zero display
+** Wait for reset button
+** Zero bars
+** Countdown from 5 to GO!
+** Start game:
+*** Timer countdown from 30.0 to 0
+*** Pedalling increments energy values based on vIn values and timeslice
+**** 1st calc power as V^2.R  (in watts) ~ 0-1000W
+**** Then calulate energy in WattSeconds (Joules) ~20000 Ws
+**** LED strip "full" should be configurable at compile time in Ws, per strip
+**** Reset button during game does the same thing - starts game from countdown
+*** At end of game, LED displays freeze
+*** wait for reset to be pressed
+
+* Notes:
+** Use long (200 ms) debounce on input to prevent noise resetting during game
+** LED strips fill from one end with a single color.  Colours can be configurable at compile time, per strip.
+
+* Nice extras:
+** Mode select mode: easy, medium, hard... to configure WattSeconds to complete each strip
