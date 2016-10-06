@@ -44,3 +44,4 @@ TODO:
 * volts as floats throughout to avoid confusion (and push into fairy lights)
 * libraryize bits
 * only update neopixels when needed, not on 100ms timer?
+* nicer LED color usage

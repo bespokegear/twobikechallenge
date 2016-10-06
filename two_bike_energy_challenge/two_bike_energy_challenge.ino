@@ -105,7 +105,7 @@ void setup()
     delay(500);
 
     // enable watchdog reset at 1/4 sec
-    //wdt_enable(WDTO_250MS);
+    wdt_enable(WDTO_250MS);
 
     // engage first mode
     setNextMode();
@@ -118,7 +118,7 @@ void setup()
 void loop()
 {
     // feed the watchdog
-    //wdt_reset();
+    wdt_reset();
 
 #ifdef DEBUGTIME
     Serial.print(F("looptime="));
