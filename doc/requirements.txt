@@ -18,19 +18,19 @@ Pedal powered game with two pedal generators
 ** SLatch, SCLK, SData to control LED display
 
 * Program flow:
-** Zero display
-** Wait for reset button
-** Zero bars
-** Countdown from 5 to GO!
+** Zero display [done]
+** Wait for reset button [done]
+** Zero bars [done]
+** Countdown from 5 to GO! [done]
 ** Start game:
-*** Timer countdown from 30.0 to 0
-*** Pedalling increments energy values based on vIn values and timeslice
-**** 1st calc power as V^2.R  (in watts) ~ 0-1000W
-**** Then calulate energy in WattSeconds (Joules) ~20000 Ws
-**** LED strip "full" should be configurable at compile time in Ws, per strip
-**** Reset button during game does the same thing - starts game from countdown
-*** At end of game, LED displays freeze, display shows "P1!" or "P2!" depending on which has the highest energy value
-*** wait for reset to be pressed
+*** Timer countdown from 30.0 to 0 [done]
+*** Pedalling increments energy values based on vIn values and timeslice [done]
+**** 1st calc power as V^2.R  (in watts) ~ 0-1000W [done]
+**** Then calulate energy in WattSeconds (Joules) ~20000 Ws [done]
+**** LED strip "full" should be configurable at compile time in Ws, per strip [done]
+**** Reset button during game does the same thing - starts game from countdown [done]
+*** At end of game, LED displays freeze, display shows "P1!" or "P2!" or "1=2" depending on which has the highest energy value
+*** wait for reset to be pressed [done]
 
 * Notes:
 ** Use long (200 ms) debounce on input to prevent noise resetting during game

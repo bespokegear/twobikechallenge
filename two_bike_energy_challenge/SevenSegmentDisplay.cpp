@@ -6,7 +6,7 @@ SevenSegmentDisplay::SevenSegmentDisplay(uint8_t SLatchPin, uint8_t SClkPin, uin
     _SClkPin(SClkPin),
     _SDataPin(SDataPin)
 {
-#ifdef DEBUG
+#ifdef DEBUG7SEG
     Serial.print(F("SevenSegmentDisplay::SevenSegmentDisplay lat="));
     Serial.print(SLatchPin);
     Serial.print(F(" clk="));
@@ -23,7 +23,7 @@ SevenSegmentDisplay::~SevenSegmentDisplay()
 
 void SevenSegmentDisplay::begin()
 {
-#ifdef DEBUG
+#ifdef DEBUG7SEG
     Serial.println(F("SevenSegmentDisplay::begin"));
 #endif
     pinMode(_SLatchPin, OUTPUT);
@@ -33,7 +33,7 @@ void SevenSegmentDisplay::begin()
 
 void SevenSegmentDisplay::clear()
 {
-#ifdef DEBUG
+#ifdef DEBUG7SEG
     Serial.println(F("SevenSegmentDisplay::clear"));
 #endif
     display(' ', ' ', ' ');
@@ -60,7 +60,7 @@ void SevenSegmentDisplay::display(int16_t i, bool zeroPad)
 
 void SevenSegmentDisplay::display(uint8_t c1, uint8_t c2, uint8_t c3, uint8_t decimalPosition)
 {
-#ifdef DEBUG
+#ifdef DEBUG7SEG
     Serial.print(F("SevenSegmentDisplay::display, digits: "));
     Serial.print(c1);
     Serial.print(' ');
@@ -70,11 +70,21 @@ void SevenSegmentDisplay::display(uint8_t c1, uint8_t c2, uint8_t c3, uint8_t de
 #endif
     // Set latch low so the LED1 don't change while sending in bits
     digitalWrite(_SLatchPin, LOW);
+    c1 = int7segment(c1);
+    c2 = int7segment(c2);
+    c3 = int7segment(c3);
+    if (decimalPosition == 1) {
+        c1 |= int7segment('.');
+    } else if (decimalPosition == 2) {
+        c2 |= int7segment('.');
+    } else if (decimalPosition == 3) {
+        c3 |= int7segment('.');
+    }
     // shift out the bits:
     // Send data via 3 shift registers:  
-    shiftOut(_SDataPin, _SClkPin, MSBFIRST, int7segment(c1));  // Puts out data onto all three digits 
-    shiftOut(_SDataPin, _SClkPin, MSBFIRST, int7segment(c2)); 
-    shiftOut(_SDataPin, _SClkPin, MSBFIRST, int7segment(c3)); 
+    shiftOut(_SDataPin, _SClkPin, MSBFIRST, c1);  // Puts out data onto all three digits 
+    shiftOut(_SDataPin, _SClkPin, MSBFIRST, c2); 
+    shiftOut(_SDataPin, _SClkPin, MSBFIRST, c3); 
     // set latch high to display new values
     digitalWrite(_SLatchPin, HIGH);
 }

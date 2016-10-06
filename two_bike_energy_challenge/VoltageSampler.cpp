@@ -16,6 +16,8 @@ VoltageSampler::VoltageSampler(const uint8_t pin, uint16_t r1KOhm, uint16_t r2KO
 
 void VoltageSampler::update() {
     _samples[_idx] = voltageConversion(_pin, _r1KOhm, _r2KOhm);
+    Serial.print(F("last sample: "));
+    Serial.println(_samples[_idx]);
     _count = _count >= VOLTAGE_SAMPLES ? VOLTAGE_SAMPLES : _count+1;
     _idx = (_idx + 1) % VOLTAGE_SAMPLES;
     _updated = true;

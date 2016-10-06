@@ -24,8 +24,8 @@ void GameMode::start()
 #ifdef DEBUG
     Serial.println(F("GameMode start"));
 #endif
-    _energy1 = 0.;
-    _energy2 = 0.;
+    _energy1 = 0;
+    _energy2 = 0;
     _startMillis = millis();
     _lastUpdate = _startMillis;
     writePixels();
@@ -47,15 +47,28 @@ void GameMode::modeUpdate()
 {
     float elapsed = (millis() - _lastUpdate) / 1000.;
     _lastUpdate = millis();
-    uint16_t vIn1 = pedalVoltage1.get();
-    uint16_t vIn2 = pedalVoltage2.get();
-#ifdef DEBUG
+    float vIn1 = PEDAL1_FUDGE_FACTOR + (pedalVoltage1.get() / 100.);
+    float vIn2 = PEDAL2_FUDGE_FACTOR + (pedalVoltage2.get() / 100.);
+    float power1 = vIn1 > PEDAL1_THRESHOLD ? vIn1*vIn1/PEDAL1_DUMP_R : 0; // P = (V^2)/R
+    float power2 = vIn2 > PEDAL2_THRESHOLD ? vIn2*vIn2/PEDAL2_DUMP_R : 0; // P = (V^2)/R
+    _energy1 += (power1 * elapsed);
+    _energy2 += (power2 * elapsed);
+    
+#ifdef DEBUGVIN
     Serial.print(F("elapsed="));
     Serial.print(elapsed);
     Serial.print(F(" vIn1="));
     Serial.print(vIn1);
     Serial.print(F(" vIn2="));
-    Serial.println(vIn2);
+    Serial.print(vIn2);
+    Serial.print(F(" pow1="));
+    Serial.print(power1);
+    Serial.print(F(" pow2="));
+    Serial.print(power2);
+    Serial.print(F(" e1="));
+    Serial.print(_energy1);
+    Serial.print(F(" e2="));
+    Serial.println(_energy2);
 #endif
     writeClock();
     writePixels();
@@ -94,20 +107,42 @@ void GameMode::writePixels()
 #ifdef DEBUG
     Serial.println(F("GameMode::writePixels"));
 #endif
+    uint16_t i;
+    bool lit;
+    for (i=0; i<LED1_COUNT; i++) {
+        bool lit = ((_energy1*LED1_COUNT) / _goal1) > i;
+        LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
+    }
+    for (i=0; i<LED2_COUNT; i++) {
+        bool lit = ((_energy2*LED2_COUNT) / _goal2) > i;
+        LED2.setPixelColor(i, lit ? P2_ON_COLOR : P2_OFF_COLOR);
+    }
+    LED1.show();
+    LED2.show();
 }
 
 bool GameMode::isFinished()
 {
-    return (millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000;
+    if ((millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
+        if (_energy1 > _energy2) {
+            ClockDisplay.display("P1!");
+        } else if (_energy2 > _energy1) {
+            ClockDisplay.display("P1!");
+        } else {
+            ClockDisplay.display("1=2");
+        }
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void GameMode::writeClock()
 {
     long left10ths = ((_startMillis + GAME_LENGTH_SECONDS * 1000) - millis())/100;
-#ifdef DEBUG
-    Serial.print(F("GameMode::writeClock left="));
-    Serial.println(left10ths);
-#endif
-    ClockDisplay.display(left10ths);
+    uint8_t c1 = (left10ths / 100) % 10;
+    uint8_t c2 = (left10ths / 10) % 10;
+    uint8_t c3 = left10ths % 10;
+    ClockDisplay.display(c1==0 ? ' ' : c1, c2, c3, 2);
 }
 

@@ -6,9 +6,15 @@
 #define PEDAL1_VOLTAGE_PIN          A0
 #define PEDAL1_VOLTAGE_R1           10
 #define PEDAL1_VOLTAGE_R2           560
+#define PEDAL1_DUMP_R               4.0
+#define PEDAL1_FUDGE_FACTOR         2.1
+#define PEDAL1_THRESHOLD            PEDAL1_FUDGE_FACTOR + 0.2
 #define PEDAL2_VOLTAGE_PIN          A1
 #define PEDAL2_VOLTAGE_R1           10
 #define PEDAL2_VOLTAGE_R2           560
+#define PEDAL2_DUMP_R               4.0
+#define PEDAL2_FUDGE_FACTOR         2.1
+#define PEDAL2_THRESHOLD            PEDAL2_FUDGE_FACTOR + 0.2
 #define ARDUINO_VOLTAGE_PIN         A6
 #define ARDUINO_VOLTAGE_R1          10
 #define ARDUINO_VOLTAGE_R2          100
@@ -26,15 +32,14 @@
 // This is for initialising the Adafruit_NeoPixel library
 // and will depend on the LED type
 #define LED1_TYPE                   (NEO_GRB + NEO_KHZ800)
-#define LED1_DATA_PIN               3
+#define LED1_DATA_PIN               4
 #define LED1_COUNT                  109
+#define LED1_BRIGHTNESS             255
 #define LED2_TYPE                   (NEO_GRB + NEO_KHZ800)
-#define LED2_DATA_PIN               4
+#define LED2_DATA_PIN               3
 #define LED2_COUNT                  109
+#define LED2_BRIGHTNESS             255
 
-// Brightness is a range of 0-255, 255 being brightest
-// It will set the brightness in all display modes
-#define LED_BRIGHTNESS              16
 // This is used to compensate for the time it takes to write to 
 // the LED1 - without it, longer strips would take longer to 
 // fill based on the VOLT_MODE_FASTEST_SEC setting.  Determined
@@ -47,8 +52,8 @@
 #define P2_ON_COLOR                 0x00FF00UL
 #define P2_OFF_COLOR                0x000000UL
 // in WattSeconds
-#define P1_GOAL_WS                  10000
-#define P2_GOAL_WS                  10000
+#define P1_GOAL_WS                  2500
+#define P2_GOAL_WS                  2500
 #define GAME_LENGTH_SECONDS         30
 
 // Other mode settings

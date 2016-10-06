@@ -34,7 +34,7 @@ enum eModes {
     Countdown,
     Game
 };
-eModes nextMode = Wait;
+eModes nextMode = Game;
 
 void setNextMode()
 {
@@ -94,8 +94,8 @@ void setup()
     // Configure global Adafruit_Neopixel objects (from LEDs.h)
     LED1.begin();
     LED2.begin();
-    LED1.setBrightness(LED_BRIGHTNESS);
-    LED2.setBrightness(LED_BRIGHTNESS);
+    LED1.setBrightness(LED1_BRIGHTNESS);
+    LED2.setBrightness(LED2_BRIGHTNESS);
     LED1.clear();
     LED2.clear();
     LED1.show(); // Initialize all pixels to 'off'
