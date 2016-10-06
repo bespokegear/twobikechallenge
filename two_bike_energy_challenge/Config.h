@@ -23,30 +23,34 @@
 #define SDATA_PIN                   12
 
 // LED strip parameters
-#define LED_DATA_PIN                4
 // This is for initialising the Adafruit_NeoPixel library
 // and will depend on the LED type
-#define NEOPIXEL_TYPE               (NEO_GRB + NEO_KHZ800)
-#define NUMBER_OF_LEDS              84
+#define LED1_TYPE                   (NEO_GRB + NEO_KHZ800)
+#define LED1_DATA_PIN               3
+#define LED1_COUNT                  109
+#define LED2_TYPE                   (NEO_GRB + NEO_KHZ800)
+#define LED2_DATA_PIN               4
+#define LED2_COUNT                  109
+
 // Brightness is a range of 0-255, 255 being brightest
 // It will set the brightness in all display modes
 #define LED_BRIGHTNESS              16
 // This is used to compensate for the time it takes to write to 
-// the LEDs - without it, longer strips would take longer to 
+// the LED1 - without it, longer strips would take longer to 
 // fill based on the VOLT_MODE_FASTEST_SEC setting.  Determined
 // by trial and error
 #define LED_SPEED_FACTOR            180
 
 // GameMode parameters
-#define VOLT_MODE_COLOR_ON          0xFF500AUL
-#define VOLT_MODE_COLOR_OFF         0x000000UL
-// in 100ths of a volt:
-#define VOLT_MODE_VMIN              1300
-// in 100ths of a volt:
-#define VOLT_MODE_VMAX              2500
-// range 0.0= cubic, 1.0=totally linear
-#define VOLT_MODE_LINEARITY         0.5
-#define VOLT_MODE_FASTEST_SEC       5.0
-#define VOLT_MODE_EEPROM_OFFSET     0
+#define P1_ON_COLOR                 0xFF0000UL
+#define P1_OFF_COLOR                0x000000UL
+#define P2_ON_COLOR                 0x00FF00UL
+#define P2_OFF_COLOR                0x000000UL
+// in WattSeconds
+#define P1_GOAL_WS                  10000
+#define P2_GOAL_WS                  10000
+#define GAME_LENGTH_SECONDS         30
 
+// Other mode settings
 #define COUNTDOWN_SECONDS           3
+

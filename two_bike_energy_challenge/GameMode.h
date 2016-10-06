@@ -4,24 +4,29 @@
 #include "DisplayMode.h"
 #include <stdint.h>
 
-class GameMode : public DisplayMode {
+class GameMode : public Mode {
 public:
     GameMode();
               
-    virtual void start();
-    virtual void stop();
-    virtual void reset();
-    virtual void modeUpdate();
-    virtual void enterBrownout();
-    virtual void exitBrownout();
-
-private:
-    float _lastPixel;
-    unsigned long _lastUpdate;
-
+    void start();
+    void stop();
+    void reset();
+    void modeUpdate();
+    void enterBrownout();
+    void exitBrownout();
+    bool isFinished();
     void saveToEEPROM();
     void restoreFromEEPROM();
-
     void writePixels();
+    void writeClock();
+
+private:
+    unsigned long _startMillis;
+    unsigned long _lastUpdate;
+    float _energy1;
+    float _energy2;
+    float _goal1;
+    float _goal2;
+
 };
 

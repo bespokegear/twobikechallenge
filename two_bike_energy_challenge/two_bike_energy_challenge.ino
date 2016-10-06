@@ -91,11 +91,15 @@ void setup()
     pinMode(INDICATOR_LED_PIN, OUTPUT);
     digitalWrite(INDICATOR_LED_PIN, LOW);
 
-    // Configure global Adafruit_Neopixel object (from LEDs.h)
-    //LEDs.begin();
-    //LEDs.setBrightness(LED_BRIGHTNESS);
-    //LEDs.clear();
-    //LEDs.show(); // Initialize all pixels to 'off'
+    // Configure global Adafruit_Neopixel objects (from LEDs.h)
+    LED1.begin();
+    LED2.begin();
+    LED1.setBrightness(LED_BRIGHTNESS);
+    LED2.setBrightness(LED_BRIGHTNESS);
+    LED1.clear();
+    LED2.clear();
+    LED1.show(); // Initialize all pixels to 'off'
+    LED2.show(); // Initialize all pixels to 'off'
 
     // Let things settle
     delay(500);
@@ -145,10 +149,12 @@ void loop()
 
     mode->update();
 
-    // Check if modes has expired.  We can assume we're going to switch into
-    // Game mode here, since the only mode which expires is CountdownMode
     if (mode->isFinished()) {
-        nextMode = Game;
+        if (nextMode == Countdown) {
+            nextMode = Game;
+        } else {
+            nextMode = Wait;
+        }
         setNextMode();
     }
 }

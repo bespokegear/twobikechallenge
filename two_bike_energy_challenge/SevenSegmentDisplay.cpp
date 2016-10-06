@@ -68,7 +68,7 @@ void SevenSegmentDisplay::display(uint8_t c1, uint8_t c2, uint8_t c3, uint8_t de
     Serial.print(' ');
     Serial.println(c3);
 #endif
-    // Set latch low so the LEDs don't change while sending in bits
+    // Set latch low so the LED1 don't change while sending in bits
     digitalWrite(_SLatchPin, LOW);
     // shift out the bits:
     // Send data via 3 shift registers:  

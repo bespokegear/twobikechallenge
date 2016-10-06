@@ -22,7 +22,7 @@ void DisplayMode::stop()
 
 void DisplayMode::resetPixels()
 {
-    LEDs.clear();
-    LEDs.show();
+    LED1.clear();
+    LED1.show();
 }
 
