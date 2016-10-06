@@ -1,6 +1,6 @@
 #include "GameMode.h"
 #include "Util.h"
-#include "PedalVoltage.h"
+#include "VinMonitors.h"
 #include <Arduino.h>
 #include <EEPROM.h>
 
@@ -9,7 +9,7 @@ GameMode::GameMode() :
 {
 #ifdef DEBUG
     Serial.print(F("GameMode::GameMode(), voltPin="));
-    Serial.println(PedalVoltage.getPin());
+    Serial.println(PedalVoltage1.getPin());
 #endif
     // get _lastPixel from EEPROM
     restoreFromEEPROM();
@@ -62,7 +62,7 @@ void GameMode::modeUpdate()
         LEDs.clear();
         LEDs.show();
     }
-    uint16_t vIn = PedalVoltage.get();
+    uint16_t vIn = PedalVoltage1.get();
 #ifdef DEBUGVIN
     Serial.print(F("vIn="));
     Serial.print(vIn);

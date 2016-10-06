@@ -10,7 +10,7 @@
 #include "CountdownMode.h"
 #include "GameMode.h"
 #include "Util.h"
-//#include "PedalVoltage.h"
+#include "VinMonitors.h"
 //#include "LEDs.h"
 #include <Arduino.h>
 #include <avr/wdt.h>
@@ -125,17 +125,26 @@ void loop()
     // give a time slice to various peripheral functions
     heartbeat->update();
     resetButton->update();
-    //PedalVoltage.update();
+    PedalVoltage1.update();
+    PedalVoltage2.update();
+    ArduinoVoltage.update();
 
     // detect button presses and behave appropriately
     if (resetButton->isPressed()) {
 #ifdef DEBUG
-        Serial.println(F("BUTTON: resetting mode"));
+        Serial.println(F("BUTTON: starting countdown"));
 #endif
         nextMode = Countdown;
         setNextMode();
     }
 
     mode->update();
+
+    // Check if modes has expired.  We can assume we're going to switch into
+    // Game mode here, since the only mode which expires is CountdownMode
+    if (mode->isFinished()) {
+        nextMode = Game;
+        setNextMode();
+    }
 }
 

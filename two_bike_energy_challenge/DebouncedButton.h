@@ -2,8 +2,8 @@
 
 #include <stdint.h>
 
-#define DEBOUNCECOUNT   5
-#define DEBOUNCETIME   5
+#define DEBOUNCECOUNT   4
+#define DEBOUNCETIME   50
 
 class DebouncedButton {
 public:

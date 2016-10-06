@@ -3,22 +3,20 @@
 #include <Arduino.h>
 
 // General config
-#define PEDAL_VOLTAGE_PIN           A0
-#define PEDAL_VOLTAGE_R1            10
-#define PEDAL_VOLTAGE_R2            560
-#define CAP_VOLTAGE_PIN             A1
-#define CAP_VOLTAGE_R1              10
-#define CAP_VOLTAGE_R2              150
+#define PEDAL1_VOLTAGE_PIN          A0
+#define PEDAL1_VOLTAGE_R1           10
+#define PEDAL1_VOLTAGE_R2           560
+#define PEDAL2_VOLTAGE_PIN          A1
+#define PEDAL2_VOLTAGE_R1           10
+#define PEDAL2_VOLTAGE_R2           560
+#define ARDUINO_VOLTAGE_PIN         A6
+#define ARDUINO_VOLTAGE_R1          10
+#define ARDUINO_VOLTAGE_R2          100
 #define RESET_BUTTON_PIN            2
-#define MODE_BUTTON_PIN             3
 #define HEARTBEAT_LED_PIN           13
 #define INDICATOR_LED_PIN           9
-#define PWM_LOAD_PIN                5
-#define VPWMSETPOINT                3500 
-#define VPWMHYSTERESIS              500
 #define BROWNOUT_HIGH               1300
-#define BROWNOUT_LOW                1200
-#define LOAD_CONTROL_PERIOD_MS      25
+#define BROWNOUT_LOW                300
 #define VOLTAGE_SAMPLES             20
 
 // LED strip parameters
@@ -47,13 +45,4 @@
 #define VOLT_MODE_LINEARITY         0.5
 #define VOLT_MODE_FASTEST_SEC       5.0
 #define VOLT_MODE_EEPROM_OFFSET     0
-
-// CapMode parameters
-#define CAP_MODE_LOW_VOLTS          1200
-#define CAP_MODE_HIGH_VOLTS         1320
-
-// Params for flare modes
-#define FLARE_COLOR_FILL_DURATION   0.2
-#define RAINBOW_DELAY_MS            5
-#define SPARKLE_DELAY_MS            10
 
