@@ -23,6 +23,8 @@ public:
 private:
     unsigned long _startMillis;
     unsigned long _lastUpdate;
+    unsigned long _lastLEDUpdate;
+    long _lastClock;
     float _energy1;
     float _energy2;
     float _goal1;

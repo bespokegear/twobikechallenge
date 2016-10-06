@@ -28,6 +28,7 @@ void GameMode::start()
     _energy2 = 0;
     _startMillis = millis();
     _lastUpdate = _startMillis;
+    _lastLEDUpdate = _startMillis;
     writePixels();
 }
 
@@ -71,7 +72,10 @@ void GameMode::modeUpdate()
     Serial.println(_energy2);
 #endif
     writeClock();
-    writePixels();
+    if (_lastUpdate - _lastLEDUpdate > LED_UPDATE_DELAY_MS) {
+        writePixels();
+        _lastLEDUpdate = _lastUpdate;
+    }
 }
 
 void GameMode::enterBrownout()
@@ -127,7 +131,7 @@ bool GameMode::isFinished()
         if (_energy1 > _energy2) {
             ClockDisplay.display("P1!");
         } else if (_energy2 > _energy1) {
-            ClockDisplay.display("P1!");
+            ClockDisplay.display("P2!");
         } else {
             ClockDisplay.display("1=2");
         }
@@ -140,9 +144,11 @@ bool GameMode::isFinished()
 void GameMode::writeClock()
 {
     long left10ths = ((_startMillis + GAME_LENGTH_SECONDS * 1000) - millis())/100;
+    if (left10ths == _lastClock) { return; }
     uint8_t c1 = (left10ths / 100) % 10;
     uint8_t c2 = (left10ths / 10) % 10;
     uint8_t c3 = left10ths % 10;
+    _lastClock = left10ths;
     ClockDisplay.display(c1==0 ? ' ' : c1, c2, c3, 2);
 }
 

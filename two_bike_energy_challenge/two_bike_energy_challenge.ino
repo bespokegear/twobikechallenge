@@ -34,7 +34,7 @@ enum eModes {
     Countdown,
     Game
 };
-eModes nextMode = Game;
+eModes nextMode = Wait;
 
 void setNextMode()
 {

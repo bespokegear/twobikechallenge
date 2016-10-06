@@ -3,13 +3,13 @@
 #include <Arduino.h>
 
 // General config
-#define PEDAL1_VOLTAGE_PIN          A0
+#define PEDAL1_VOLTAGE_PIN          A1
 #define PEDAL1_VOLTAGE_R1           10
 #define PEDAL1_VOLTAGE_R2           560
 #define PEDAL1_DUMP_R               4.0
 #define PEDAL1_FUDGE_FACTOR         2.1
 #define PEDAL1_THRESHOLD            PEDAL1_FUDGE_FACTOR + 0.2
-#define PEDAL2_VOLTAGE_PIN          A1
+#define PEDAL2_VOLTAGE_PIN          A0
 #define PEDAL2_VOLTAGE_R1           10
 #define PEDAL2_VOLTAGE_R2           560
 #define PEDAL2_DUMP_R               4.0
@@ -32,19 +32,14 @@
 // This is for initialising the Adafruit_NeoPixel library
 // and will depend on the LED type
 #define LED1_TYPE                   (NEO_GRB + NEO_KHZ800)
-#define LED1_DATA_PIN               4
+#define LED1_DATA_PIN               3
 #define LED1_COUNT                  109
 #define LED1_BRIGHTNESS             255
 #define LED2_TYPE                   (NEO_GRB + NEO_KHZ800)
-#define LED2_DATA_PIN               3
+#define LED2_DATA_PIN               4
 #define LED2_COUNT                  109
 #define LED2_BRIGHTNESS             255
-
-// This is used to compensate for the time it takes to write to 
-// the LED1 - without it, longer strips would take longer to 
-// fill based on the VOLT_MODE_FASTEST_SEC setting.  Determined
-// by trial and error
-#define LED_SPEED_FACTOR            180
+#define LED_UPDATE_DELAY_MS         100
 
 // GameMode parameters
 #define P1_ON_COLOR                 0xFF0000UL

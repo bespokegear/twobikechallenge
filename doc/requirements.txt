@@ -38,3 +38,8 @@ Pedal powered game with two pedal generators
 
 * Nice extras:
 ** Mode select mode: easy, medium, hard... to configure WattSeconds to complete each strip
+
+TODO:
+* handle brownouts
+* volts as floats throughout to avoid confusion (and push into fairy lights)
+* libraryize bits

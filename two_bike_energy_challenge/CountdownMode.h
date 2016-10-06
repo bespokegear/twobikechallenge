@@ -13,6 +13,7 @@ public:
 
 private:
     unsigned long _start;
+    int8_t _lastSent;
     int8_t seconds();
 
 };

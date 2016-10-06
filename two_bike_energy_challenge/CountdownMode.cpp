@@ -18,6 +18,7 @@ void CountdownMode::start()
     Serial.println(F("CountdownMode::start()"));
 #endif
     _start = millis();
+    _lastSent = -1;
 }
 
 void CountdownMode::stop()
@@ -35,10 +36,13 @@ void CountdownMode::modeUpdate()
     Serial.print(F("CountdownMode::modeUpdate() left="));
     Serial.println(left);
 #endif
-    if (left > 0) {
-        ClockDisplay.display(left);
-    } else {
-        ClockDisplay.display("Go!");
+    if (_lastSent != left) {
+        _lastSent = left;
+        if (left > 0) {
+            ClockDisplay.display(left);
+        } else {
+            ClockDisplay.display("Go!");
+        }
     }
 }
 
