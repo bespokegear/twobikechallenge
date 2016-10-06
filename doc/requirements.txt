@@ -29,7 +29,7 @@ Pedal powered game with two pedal generators
 **** Then calulate energy in WattSeconds (Joules) ~20000 Ws
 **** LED strip "full" should be configurable at compile time in Ws, per strip
 **** Reset button during game does the same thing - starts game from countdown
-*** At end of game, LED displays freeze
+*** At end of game, LED displays freeze, display shows "P1!" or "P2!" depending on which has the highest energy value
 *** wait for reset to be pressed
 
 * Notes:

@@ -9,7 +9,7 @@ GameMode::GameMode() :
 {
 #ifdef DEBUG
     Serial.print(F("GameMode::GameMode(), voltPin="));
-    Serial.println(PedalVoltage1.getPin());
+    Serial.println(pedalVoltage1.getPin());
 #endif
     // get _lastPixel from EEPROM
     restoreFromEEPROM();
@@ -62,7 +62,7 @@ void GameMode::modeUpdate()
         LEDs.clear();
         LEDs.show();
     }
-    uint16_t vIn = PedalVoltage1.get();
+    uint16_t vIn = pedalVoltage1.get();
 #ifdef DEBUGVIN
     Serial.print(F("vIn="));
     Serial.print(vIn);

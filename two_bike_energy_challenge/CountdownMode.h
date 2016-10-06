@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mode.h"
+#include <stdint.h>
 
 class CountdownMode : public Mode {
 public:
@@ -12,6 +13,7 @@ public:
 
 private:
     unsigned long _start;
+    int8_t seconds();
 
 };
 

@@ -1,8 +1,8 @@
+#include "Config.h"
 #include "CountdownMode.h"
+#include "ClockDisplay.h"
 #include <stdint.h>
 #include <Arduino.h>
-
-#define COUNTDOWN_SECONDS 5
 
 CountdownMode::CountdownMode()
 {
@@ -30,15 +30,25 @@ void CountdownMode::stop()
 
 void CountdownMode::modeUpdate()
 {
+    int8_t left = seconds();
 #ifdef DEBUG
     Serial.print(F("CountdownMode::modeUpdate() left="));
-    long left = COUNTDOWN_SECONDS - ((millis()-_start)/1000);
     Serial.println(left);
 #endif
+    if (left > 0) {
+        ClockDisplay.display(left);
+    } else {
+        ClockDisplay.display("Go!");
+    }
+}
+
+int8_t CountdownMode::seconds()
+{
+    return COUNTDOWN_SECONDS - ((millis()-_start)/1000);
 }
 
 bool CountdownMode::isFinished()
 {
-    return millis() - _start >= (COUNTDOWN_SECONDS*1000);
+    return seconds() < 0;
 }
 

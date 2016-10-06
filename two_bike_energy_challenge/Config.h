@@ -18,6 +18,9 @@
 #define BROWNOUT_HIGH               1300
 #define BROWNOUT_LOW                300
 #define VOLTAGE_SAMPLES             20
+#define SLATCH_PIN                  10
+#define SCLK_PIN                    11
+#define SDATA_PIN                   12
 
 // LED strip parameters
 #define LED_DATA_PIN                4
@@ -46,3 +49,4 @@
 #define VOLT_MODE_FASTEST_SEC       5.0
 #define VOLT_MODE_EEPROM_OFFSET     0
 
+#define COUNTDOWN_SECONDS           3

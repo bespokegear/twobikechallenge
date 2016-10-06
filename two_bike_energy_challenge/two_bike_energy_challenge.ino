@@ -11,6 +11,7 @@
 #include "GameMode.h"
 #include "Util.h"
 #include "VinMonitors.h"
+#include "ClockDisplay.h"
 //#include "LEDs.h"
 #include <Arduino.h>
 #include <avr/wdt.h>
@@ -82,6 +83,10 @@ void setup()
     // Construct input buttons (sets pin modes in constructor)
     resetButton = new DebouncedButton(RESET_BUTTON_PIN);
 
+    // init pins for clock display
+    ClockDisplay.begin();
+    ClockDisplay.clear();
+
     // Ensure load is disconnected at start, indicator off
     pinMode(INDICATOR_LED_PIN, OUTPUT);
     digitalWrite(INDICATOR_LED_PIN, LOW);
@@ -125,8 +130,8 @@ void loop()
     // give a time slice to various peripheral functions
     heartbeat->update();
     resetButton->update();
-    PedalVoltage1.update();
-    PedalVoltage2.update();
+    pedalVoltage1.update();
+    pedalVoltage2.update();
     ArduinoVoltage.update();
 
     // detect button presses and behave appropriately
