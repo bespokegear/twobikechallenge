@@ -6,12 +6,18 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 
-GameMode::GameMode() :
+_GameMode GameMode;
+
+_GameMode::_GameMode() :
     _goal1(P1_GOAL_WS),
     _goal2(P2_GOAL_WS)
 {
+}
+
+void _GameMode::begin()
+{
 #ifdef DEBUG
-    Serial.print(F("GameMode::GameMode() vinPin1="));
+    Serial.print(F("GameMode::_begin() vinPin1="));
     Serial.print(PedalVoltage1.getPin());
     Serial.print(F(" vinPin2="));
     Serial.println(PedalVoltage2.getPin());
@@ -19,7 +25,7 @@ GameMode::GameMode() :
     start();
 }
 
-void GameMode::start()
+void _GameMode::start()
 {
 #ifdef DEBUG
     Serial.println(F("GameMode start"));
@@ -32,19 +38,19 @@ void GameMode::start()
     writePixels();
 }
 
-void GameMode::stop()
+void _GameMode::stop()
 {
 #ifdef DEBUG
     Serial.print(F("GameMode stop"));
 #endif
 }
 
-void GameMode::reset()
+void _GameMode::reset()
 {
     start();
 }
 
-void GameMode::modeUpdate()
+void _GameMode::modeUpdate()
 {
     float elapsed = (millis() - _lastUpdate) / 1000.;
     _lastUpdate = millis();
@@ -75,35 +81,35 @@ void GameMode::modeUpdate()
     }
 }
 
-void GameMode::enterBrownout()
+void _GameMode::enterBrownout()
 {
 #ifdef DEBUG
     Serial.println(F("GameMode::enterBrownout"));
 #endif
 }
 
-void GameMode::exitBrownout()
+void _GameMode::exitBrownout()
 {
 #ifdef DEBUG
     Serial.println(F("GameMode::exitBrownout"));
 #endif
 }
 
-void GameMode::saveToEEPROM()
+void _GameMode::saveToEEPROM()
 {
 #ifdef DEBUG
     Serial.println(F("GameMode::saveToEEPROM"));
 #endif
 }
 
-void GameMode::restoreFromEEPROM()
+void _GameMode::restoreFromEEPROM()
 {
 #ifdef DEBUG
     Serial.println(F("GameMode::restoreFromEEPROM -> "));
 #endif
 }
 
-void GameMode::writePixels()
+void _GameMode::writePixels()
 {
 #ifdef DEBUG
     Serial.println(F("GameMode::writePixels"));
@@ -122,7 +128,7 @@ void GameMode::writePixels()
     LED2.show();
 }
 
-bool GameMode::isFinished()
+bool _GameMode::isFinished()
 {
     if ((millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
         if (_energy1 > _energy2) {
@@ -138,7 +144,7 @@ bool GameMode::isFinished()
     }
 }
 
-void GameMode::writeClock()
+void _GameMode::writeClock()
 {
     long left10ths = ((_startMillis + GAME_LENGTH_SECONDS * 1000) - millis())/100;
     if (left10ths == _lastClock) { return; }

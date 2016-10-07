@@ -4,15 +4,21 @@
 #include <stdint.h>
 #include <Arduino.h>
 
-CountdownMode::CountdownMode()
+_CountdownMode CountdownMode;
+
+_CountdownMode::_CountdownMode()
+{
+}
+
+void _CountdownMode::begin()
 {
 #ifdef DEBUG
-    Serial.println(F("CountdownMode::CountdownMode()"));
+    Serial.println(F("CountdownMode::begin()"));
 #endif
     start();
 }
 
-void CountdownMode::start()
+void _CountdownMode::start()
 {
 #ifdef DEBUG
     Serial.println(F("CountdownMode::start()"));
@@ -21,7 +27,7 @@ void CountdownMode::start()
     _lastSent = -1;
 }
 
-void CountdownMode::stop()
+void _CountdownMode::stop()
 {
 #ifdef DEBUG
     Serial.println(F("CountdownMode::stop()"));
@@ -29,7 +35,7 @@ void CountdownMode::stop()
     _start = 0;
 }
 
-void CountdownMode::modeUpdate()
+void _CountdownMode::modeUpdate()
 {
     int8_t left = seconds();
 #ifdef DEBUG
@@ -46,12 +52,12 @@ void CountdownMode::modeUpdate()
     }
 }
 
-int8_t CountdownMode::seconds()
+int8_t _CountdownMode::seconds()
 {
     return COUNTDOWN_SECONDS - ((millis()-_start)/1000);
 }
 
-bool CountdownMode::isFinished()
+bool _CountdownMode::isFinished()
 {
     return seconds() < 0;
 }

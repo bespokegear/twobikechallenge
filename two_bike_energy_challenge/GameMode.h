@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Config.h"
-#include "DisplayMode.h"
+#include "Mode.h"
 #include <stdint.h>
 
-class GameMode : public Mode {
+class _GameMode : public Mode {
 public:
-    GameMode();
+    _GameMode();
               
+    void begin();
     void start();
     void stop();
     void reset();
@@ -31,4 +32,6 @@ private:
     float _goal2;
 
 };
+
+extern _GameMode GameMode;
 

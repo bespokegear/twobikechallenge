@@ -3,9 +3,10 @@
 #include "Mode.h"
 #include <stdint.h>
 
-class CountdownMode : public Mode {
+class _CountdownMode : public Mode {
 public:
-    CountdownMode();
+    _CountdownMode();
+    void begin();
     void start();
     void stop();
     void modeUpdate();
@@ -17,4 +18,7 @@ private:
     int8_t seconds();
 
 };
+
+extern _CountdownMode CountdownMode;
+
 

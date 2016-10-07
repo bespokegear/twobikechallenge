@@ -10,6 +10,7 @@
 #include "CountdownMode.h"
 #include "GameMode.h"
 #include "Util.h"
+#include "LEDs.h"
 #include "VinMonitors.h"
 #include "ClockDisplay.h"
 //#include "LEDs.h"
@@ -23,52 +24,11 @@
 
 Heartbeat* heartbeat;
 DebouncedButton* resetButton;
-Mode* mode = NULL;
+Mode* mode = &WaitMode;
 
 #ifdef DEBUGTIME
 unsigned long lastLoop = 0;
 #endif
-
-enum eModes {
-    Wait,
-    Countdown,
-    Game
-};
-eModes nextMode = Wait;
-
-void setNextMode()
-{
-#ifdef DEBUG
-    int freeb4 = freeMemory();
-#endif
-    bool start = false;
-    if (mode) {
-        mode->stop();
-        delete mode;
-        mode = NULL;
-        start = true;
-    }
-    switch (nextMode) {
-    case Wait:
-        mode = new WaitMode();
-        break;
-    case Countdown:
-        mode = new CountdownMode();
-        break;
-    case Game:
-        mode = new GameMode();
-        break;
-    }
-    if (start) {
-        mode->start();
-    }
-#ifdef DEBUG
-    Serial.print(F("setNextMode() free b4/now: "));
-    Serial.print(freeb4);
-    Serial.print(F("/"));
-    Serial.println(freeMemory());
-#endif
-}
 
 void setup()
 {
@@ -101,42 +61,47 @@ void setup()
     LED1.show(); // Initialize all pixels to 'off'
     LED2.show(); // Initialize all pixels to 'off'
 
+    // init various modes
+    WaitMode.begin();
+    CountdownMode.begin();
+    GameMode.begin();
+
     // Let things settle
     delay(500);
 
-    // enable watchdog reset at 1/4 sec
-    wdt_enable(WDTO_250MS);
+    // Call start for current mode
+    mode->start();
 
-    // engage first mode
-    setNextMode();
+    // Enable watchdog reset at 1/4 sec
+    wdt_enable(WDTO_250MS);
 
 #ifdef DEBUG
     Serial.println(F("setup() E"));
 #endif
 }
 
-void loop()
+void loopDebug()
 {
-    // feed the watchdog
-    wdt_reset();
+#ifdef DEBUG
+    if (mode == &WaitMode) {
+        Serial.println(F("in WaitMode"));
+    }
+    else if (mode == &CountdownMode) {
+        Serial.println(F("in CountdownMode"));
+    }
+    else if (mode == &GameMode) {
+        Serial.println(F("in GameMode"));
+    }
+    else {
+        Serial.println(F("Unknown mode!"));
+    }
+#endif 
 
 #ifdef DEBUGTIME
     Serial.print(F("looptime="));
     Serial.println(millis() - lastLoop);
     lastLoop = millis();
 #endif
-
-#ifdef DEBUGMEM
-    Serial.print(F("free="));
-    Serial.println(freeMemory());
-#endif
-
-    // give a time slice to various peripheral functions
-    heartbeat->update();
-    resetButton->update();
-    PedalVoltage1.update();
-    PedalVoltage2.update();
-    ArduinoVoltage.update();
 
 #ifdef DEBUGVIN
     Serial.print(F("Vin p1="));
@@ -147,24 +112,49 @@ void loop()
     Serial.println(ArduinoVoltage.get());
 #endif
 
-    // detect button presses and behave appropriately
+#ifdef DEBUGMEM
+    Serial.print(F("free="));
+    Serial.println(freeMemory());
+#endif
+}
+
+void switchMode(Mode* newMode)
+{
+    mode->stop();
+    mode = newMode;
+    mode->start();
+}
+
+void loop()
+{
+    // Feed the watchdog
+    wdt_reset();
+
+    // Give a time slice to various peripheral functions
+    heartbeat->update();
+    resetButton->update();
+    PedalVoltage1.update();
+    PedalVoltage2.update();
+    ArduinoVoltage.update();
+
+    // Dump debugging to serial (if #defined)
+    loopDebug();
+
+    // Detect button presses and behave appropriately
     if (resetButton->isPressed()) {
 #ifdef DEBUG
         Serial.println(F("BUTTON: starting countdown"));
 #endif
-        nextMode = Countdown;
-        setNextMode();
+        switchMode(&CountdownMode);
     }
 
+    // Give a timeslice to the current mode
     mode->update();
 
+    // Handle modes timing out
     if (mode->isFinished()) {
-        if (nextMode == Countdown) {
-            nextMode = Game;
-        } else {
-            nextMode = Wait;
-        }
-        setNextMode();
+        if (mode == &CountdownMode) { switchMode(&GameMode); }
+        else if (mode == &GameMode) { switchMode(&WaitMode); }
     }
 }
 

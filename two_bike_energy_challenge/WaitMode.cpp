@@ -1,31 +1,30 @@
 #include "WaitMode.h"
 #include <Arduino.h>
 
-WaitMode::WaitMode()
+_WaitMode WaitMode;
+
+_WaitMode::_WaitMode()
 {
 #ifdef DEBUG
     Serial.println(F("WaitMode::WaitMode()"));
 #endif
 }
 
-void WaitMode::start()
+void _WaitMode::start()
 {
 #ifdef DEBUG
     Serial.println(F("WaitMode::start()"));
 #endif
 }
 
-void WaitMode::stop()
+void _WaitMode::stop()
 {
 #ifdef DEBUG
     Serial.println(F("WaitMode::stop()"));
 #endif
 }
 
-void WaitMode::modeUpdate()
+void _WaitMode::modeUpdate()
 {
-#ifdef DEBUG
-    Serial.println(F("WaitMode::modeUpdate()"));
-#endif
 }
 

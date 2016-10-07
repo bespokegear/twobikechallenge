@@ -2,12 +2,13 @@
 
 #include "Mode.h"
 
-class WaitMode : public Mode {
+class _WaitMode : public Mode {
 public:
-    WaitMode();
+    _WaitMode();
     void start();
     void stop();
     void modeUpdate();
 
 };
 
+extern _WaitMode WaitMode;

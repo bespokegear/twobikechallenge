@@ -5,6 +5,9 @@ public:
     Mode();
     virtual ~Mode() {;}
 
+    // If you want to do anythin in setup() (e.g. set pins), implement this
+    virtual void begin() {;}
+
     // All Modes must also implement a start() function
     virtual void start() = 0;
 
