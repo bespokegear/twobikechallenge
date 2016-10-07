@@ -5,7 +5,8 @@
 #include <Adafruit_NeoPixel.h>
 #include "Config.h"
 #include "Heartbeat.h"
-#include "Buttons.h"
+#include "ResetButton.h"
+#include "ModeButton.h"
 #include "WaitMode.h"
 #include "CountdownMode.h"
 #include "GameMode.h"
