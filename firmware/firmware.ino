@@ -1,29 +1,47 @@
+////////////////////////////////////////////////////////////////
+//                                                            //
+// Two Bike Pedal Powered Challenge Firmware for Arduino Nano //
+// ========================================================== //
+//                                                            //
+// Copyright (C) 2016 Renewable Energy Innovation Ltd.        //
+//                                                            //
+// Author:              Mouse (Orthogonal Systems Ltd.)       //
+// Project Start Date:  2016-10-06                            //
+//                                                            //
+////////////////////////////////////////////////////////////////
+
 // Even though these libraries are only used in other sources, we
 // #include them here so the Ardino IDE knows to compile and link 
 // them...
 #include <EEPROM.h>
 #include <Adafruit_NeoPixel.h>
+
+// General configuration
 #include "Config.h"
+
+// One #include per system object we will use
 #include "Heartbeat.h"
 #include "ResetButton.h"
 #include "ModeButton.h"
 #include "WaitMode.h"
 #include "CountdownMode.h"
 #include "GameMode.h"
-#include "Util.h"
 #include "LED1.h"
 #include "LED2.h"
 #include "Pedal1Vin.h"
 #include "Pedal2Vin.h"
 #include "ArduinoVin.h"
 #include "ClockDisplay.h"
-#include <Arduino.h>
-#include <avr/wdt.h>
 
+// General Arduino features
+#include <Arduino.h>
+
+// For watchdog
+#include <avr/wdt.h>
 
 // See Config.h for pin and other configuration
 
-// Global variables
+// Global variables - we begin in Wait Mode
 Mode* mode = &WaitMode;
 
 #ifdef DEBUGTIME
@@ -144,9 +162,6 @@ void loop()
 
     // Detect button presses and behave appropriately
     if (ResetButton.isPressed()) {
-#ifdef DEBUG
-        Serial.println(F("BUTTON: starting countdown"));
-#endif
         if (mode == &WaitMode) {
             switchMode(&CountdownMode);
         } else if (mode == &GameMode) {
