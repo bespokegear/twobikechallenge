@@ -8,9 +8,13 @@
 
 _GameMode GameMode;
 
-_GameMode::_GameMode() :
-    _difficulty(1)
+_GameMode::_GameMode()
 {
+    _difficulty = EEPROM.read(EEPROM_LEVEL_ADDRESS);
+    if (_difficulty < 1 || _difficulty > GAME_LEVEL_MAX) {
+        // bad value from EEPROM
+        _difficulty = 1;
+    }
 }
 
 void _GameMode::begin()
@@ -166,6 +170,6 @@ uint8_t _GameMode::getDifficulty()
 
 float _GameMode::goalEnergy() 
 {
-    return _difficulty * GAME_GOAL_STEP_SIZE;
+    return _difficulty * GAME_LEVEL_ENERGY_STEP;
 }
 

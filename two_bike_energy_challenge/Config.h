@@ -28,6 +28,7 @@
 #define SLATCH_PIN                  10
 #define SCLK_PIN                    11
 #define SDATA_PIN                   12
+#define EEPROM_LEVEL_ADDRESS        0
 
 // LED strip parameters
 // This is for initialising the Adafruit_NeoPixel library
@@ -47,8 +48,8 @@
 #define P1_OFF_COLOR                0x000000UL
 #define P2_ON_COLOR                 0x00FF00UL
 #define P2_OFF_COLOR                0x000000UL
-#define GAME_GOAL_STEP_SIZE         1000
-#define GAME_GOAL_STEPS             20
+#define GAME_LEVEL_ENERGY_STEP      1000
+#define GAME_LEVEL_MAX              20
 #define GAME_LENGTH_SECONDS         30
 
 // Other mode settings
