@@ -103,11 +103,11 @@ void loopDebug()
 
 #ifdef DEBUGVIN
     Serial.print(F("Vin p1="));
-    Serial.print(PedalVoltage1.get());
+    Serial.print(Pedal1Vin.get());
     Serial.print(F(" p2="));
-    Serial.print(PedalVoltage2.get());
+    Serial.print(Pedal2Vin.get());
     Serial.print(F(" ard="));
-    Serial.println(ArduinoVoltage.get());
+    Serial.println(ArduinoVin.get());
 #endif
 
 #ifdef DEBUGMEM
@@ -132,9 +132,9 @@ void loop()
     Heartbeat.update();
     ResetButton.update();
     ModeButton.update();
-    PedalVoltage1.update();
-    PedalVoltage2.update();
-    ArduinoVoltage.update();
+    Pedal1Vin.update();
+    Pedal2Vin.update();
+    ArduinoVin.update();
 
     // Dump debugging to serial (if #defined)
     loopDebug();

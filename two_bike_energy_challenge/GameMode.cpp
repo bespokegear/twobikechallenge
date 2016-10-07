@@ -21,9 +21,9 @@ void _GameMode::begin()
 {
 #ifdef DEBUG
     Serial.print(F("GameMode::_begin() vinPin1="));
-    Serial.print(PedalVoltage1.getPin());
+    Serial.print(Pedal1Vin.getPin());
     Serial.print(F(" vinPin2="));
-    Serial.println(PedalVoltage2.getPin());
+    Serial.println(Pedal2Vin.getPin());
 #endif
     start();
 }
@@ -57,8 +57,8 @@ void _GameMode::modeUpdate()
 {
     float elapsed = (millis() - _lastUpdate) / 1000.;
     _lastUpdate = millis();
-    float vIn1 = PEDAL1_FUDGE_FACTOR + PedalVoltage1.get();
-    float vIn2 = PEDAL2_FUDGE_FACTOR + PedalVoltage2.get();
+    float vIn1 = PEDAL1_FUDGE_FACTOR + Pedal1Vin.get();
+    float vIn2 = PEDAL2_FUDGE_FACTOR + Pedal2Vin.get();
     float power1 = vIn1 > PEDAL1_THRESHOLD ? vIn1*vIn1/PEDAL1_DUMP_R : 0; // P = (V^2)/R
     float power2 = vIn2 > PEDAL2_THRESHOLD ? vIn2*vIn2/PEDAL2_DUMP_R : 0; // P = (V^2)/R
     _energy1 += (power1 * elapsed);

@@ -11,7 +11,7 @@ Mode::Mode() :
 
 void Mode::update()
 {
-    float vIn = ArduinoVoltage.get();
+    float vIn = ArduinoVin.get();
     if (_brownedOut && vIn > BROWNOUT_HIGH) {
         _exitBrownout();
     }

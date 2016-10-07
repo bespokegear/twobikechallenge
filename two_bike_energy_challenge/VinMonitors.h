@@ -2,7 +2,7 @@
 
 #include "VoltageSampler.h"
 
-extern VoltageSampler PedalVoltage1;
-extern VoltageSampler PedalVoltage2;
-extern VoltageSampler ArduinoVoltage;
+extern VoltageSampler Pedal1Vin;
+extern VoltageSampler Pedal2Vin;
+extern VoltageSampler ArduinoVin;
 
