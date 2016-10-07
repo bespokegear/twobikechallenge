@@ -46,7 +46,7 @@ void _CountdownMode::modeUpdate()
     if (_lastSent != left) {
         _lastSent = left;
         if (left > 0) {
-            ClockDisplay.display(left);
+            ClockDisplay.display(' ', left, ' ');
         } else {
             ClockDisplay.display("Go!");
         }

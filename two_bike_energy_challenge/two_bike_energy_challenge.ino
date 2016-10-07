@@ -146,7 +146,12 @@ void loop()
 #ifdef DEBUG
         Serial.println(F("BUTTON: starting countdown"));
 #endif
-        switchMode(&CountdownMode);
+        if (mode == &WaitMode) {
+            switchMode(&CountdownMode);
+        } else if (mode == &GameMode) {
+            ClockDisplay.clear();
+            switchMode(&WaitMode);
+        }
     }
 
     // Give a timeslice to the current mode

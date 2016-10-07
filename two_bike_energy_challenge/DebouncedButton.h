@@ -3,7 +3,8 @@
 #include <stdint.h>
 
 #define DEBOUNCECOUNT   5
-#define DEBOUNCETIME   25
+#define DEBOUNCETIME    25
+#define NOREPRESSDELAY  300
 
 class DebouncedButton {
 public:
@@ -19,5 +20,6 @@ private:
     bool _pullup;
     uint8_t _count;
     unsigned long _last;
+    unsigned long _lastPress;
 };
 

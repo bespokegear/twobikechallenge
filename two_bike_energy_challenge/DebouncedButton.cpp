@@ -5,7 +5,8 @@ DebouncedButton::DebouncedButton(uint8_t pin, bool pullup) :
     _pin(pin),
     _pullup(pullup),
     _count(0),
-    _last(0)
+    _last(0),
+    _lastPress(0)
 {
 }
 
@@ -20,7 +21,6 @@ void DebouncedButton::begin()
 void DebouncedButton::update()
 {
     bool on = valueNow();
-
     if (on) {
         if (millis() - _last >= DEBOUNCETIME && _count < DEBOUNCECOUNT) {
             _last = millis();
@@ -34,7 +34,14 @@ void DebouncedButton::update()
 
 bool DebouncedButton::isPressed()
 {
-    return _count >= DEBOUNCECOUNT;
+    if (millis() < _lastPress + NOREPRESSDELAY) {
+        return false;
+    }
+    bool v = _count >= DEBOUNCECOUNT;
+    if (v) {
+        _lastPress = millis();   
+    }
+    return v;
 }
 
 bool DebouncedButton::valueNow()
