@@ -1,28 +1,35 @@
 #include "Heartbeat.h"
+#include "Config.h"
 #include <Arduino.h>
 
-Heartbeat::Heartbeat(int pin) :
-    _mode(Heartbeat::Normal),
+_Heartbeat Heartbeat(HEARTBEAT_LED_PIN);
+
+_Heartbeat::_Heartbeat(int pin) :
+    _mode(_Heartbeat::Normal),
 	_pin(pin),
     _pinState(true),
     _lastStateFlip(0),
     _onTime(0),
     _offTime(0)
 {
-    pinMode(_pin, OUTPUT);
 	setMode(_mode);
 }
 
-Heartbeat::~Heartbeat()
+_Heartbeat::~_Heartbeat()
 {
 }
 
-Heartbeat::Mode Heartbeat::mode()
+void _Heartbeat::begin()
+{
+    pinMode(_pin, OUTPUT);
+}
+
+_Heartbeat::Mode _Heartbeat::mode()
 {
     return _mode;
 }
 
-void Heartbeat::setMode(Mode mode)
+void _Heartbeat::setMode(Mode mode)
 {
 	_mode = mode;
 	switch (_mode) {
@@ -45,7 +52,7 @@ void Heartbeat::setMode(Mode mode)
 	}
 }
 
-void Heartbeat::update()
+void _Heartbeat::update()
 {
     unsigned long wait = _pinState ? _onTime : _offTime;
     if (millis() - _lastStateFlip >= wait) {
@@ -53,7 +60,7 @@ void Heartbeat::update()
     }
 }
 
-void Heartbeat::updatePin(bool state)
+void _Heartbeat::updatePin(bool state)
 {
     _pinState = state;
     digitalWrite(_pin, _pinState);

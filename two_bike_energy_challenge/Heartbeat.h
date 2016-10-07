@@ -9,7 +9,7 @@
 #define ON_MS_SLOWER		1000
 #define OFF_MS_SLOWER		1000
 
-class Heartbeat {
+class _Heartbeat {
 public:
 	enum Mode {
 		Normal=0,
@@ -19,8 +19,10 @@ public:
 	};
 
     // Call from setup()
-	Heartbeat(int pin);
-	~Heartbeat();
+	_Heartbeat(int pin);
+	~_Heartbeat();
+
+    void begin();
 
     Mode mode();
 	void setMode(Mode mode);
@@ -37,3 +39,6 @@ private:
 	unsigned int _offTime;
 
 };
+
+extern _Heartbeat Heartbeat;
+

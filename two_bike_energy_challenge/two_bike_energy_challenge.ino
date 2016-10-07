@@ -21,8 +21,6 @@
 // See Config.h for pin and other configuration
 
 // Global variables
-
-Heartbeat* heartbeat;
 Mode* mode = &WaitMode;
 
 #ifdef DEBUGTIME
@@ -37,7 +35,7 @@ void setup()
     analogReference(EXTERNAL);
 
     // Set up the blinker
-    heartbeat = new Heartbeat(HEARTBEAT_LED_PIN);
+    Heartbeat.begin();
 
     // Init buttons (set pin modes)
     ResetButton.begin();
@@ -131,7 +129,7 @@ void loop()
     wdt_reset();
 
     // Give a time slice to various peripheral functions
-    heartbeat->update();
+    Heartbeat.update();
     ResetButton.update();
     ModeButton.update();
     PedalVoltage1.update();
