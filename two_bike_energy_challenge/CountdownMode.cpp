@@ -1,7 +1,8 @@
 #include "Config.h"
 #include "CountdownMode.h"
 #include "ClockDisplay.h"
-#include "LEDs.h"
+#include "LED1.h"
+#include "LED2.h"
 #include <stdint.h>
 #include <Arduino.h>
 

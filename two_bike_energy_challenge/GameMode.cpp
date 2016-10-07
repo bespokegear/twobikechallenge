@@ -2,7 +2,8 @@
 #include "Util.h"
 #include "Pedal1Vin.h"
 #include "Pedal2Vin.h"
-#include "LEDs.h"
+#include "LED1.h"
+#include "LED2.h"
 #include "ClockDisplay.h"
 #include <Arduino.h>
 #include <EEPROM.h>
