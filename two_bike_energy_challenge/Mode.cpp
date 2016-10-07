@@ -12,10 +12,6 @@ Mode::Mode() :
 void Mode::update()
 {
     float vIn = ArduinoVoltage.get();
-#if (defined(DEBUGVIN) && defined(DEBUG))
-    Serial.print(F("Mode::update, vIn="));
-    Serial.println(vIn);
-#endif
     if (_brownedOut && vIn > BROWNOUT_HIGH) {
         _exitBrownout();
     }

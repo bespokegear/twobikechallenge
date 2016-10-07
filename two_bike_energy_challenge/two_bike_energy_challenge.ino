@@ -134,9 +134,18 @@ void loop()
     // give a time slice to various peripheral functions
     heartbeat->update();
     resetButton->update();
-    pedalVoltage1.update();
-    pedalVoltage2.update();
+    PedalVoltage1.update();
+    PedalVoltage2.update();
     ArduinoVoltage.update();
+
+#ifdef DEBUGVIN
+    Serial.print(F("Vin p1="));
+    Serial.print(PedalVoltage1.get());
+    Serial.print(F(" p2="));
+    Serial.print(PedalVoltage2.get());
+    Serial.print(F(" ard="));
+    Serial.println(ArduinoVoltage.get());
+#endif
 
     // detect button presses and behave appropriately
     if (resetButton->isPressed()) {

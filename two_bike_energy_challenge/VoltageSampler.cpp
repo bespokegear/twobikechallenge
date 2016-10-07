@@ -18,8 +18,6 @@ VoltageSampler::VoltageSampler(const uint8_t pin, uint16_t r1KOhm, uint16_t r2KO
 
 void VoltageSampler::update() {
     _samples[_idx] = voltageConversion(_pin, _r1KOhm, _r2KOhm);
-    Serial.print(F("last sample: "));
-    Serial.println(_samples[_idx]);
     _count = _count >= VOLTAGE_SAMPLES ? VOLTAGE_SAMPLES : _count+1;
     _idx = (_idx + 1) % VOLTAGE_SAMPLES;
     _updated = true;
@@ -29,11 +27,11 @@ float VoltageSampler::get() {
     if (!_updated) {
         return _lastAvg;
     }
-    uint32_t sum = 0;
+    float sum = 0;
     for(uint8_t i=0; i<_count; i++) {
         sum += _samples[i];
     }
-    _lastAvg = (uint16_t)(sum / _count);
+    _lastAvg = sum / _count;
     _updated = false;
     return _lastAvg;
 }
