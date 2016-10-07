@@ -28,6 +28,9 @@ void _WaitMode::stop()
 #ifdef DEBUG
     Serial.println(F("WaitMode::stop()"));
 #endif
+#ifndef NOEEPROM
+    // TODO: Check to see if we updated the level, and if so, overwrite with the new value
+#endif
 }
 
 void _WaitMode::modeUpdate()
@@ -36,32 +39,14 @@ void _WaitMode::modeUpdate()
 #ifdef DEBUG
     Serial.println(F("WaitMode mode button pressed."));
 #endif
-        _GameMode::Difficulty d = GameMode.getDifficulty();
+        uint8_t d = GameMode.getDifficulty();
         if (_modeSelect) {
-            switch (d) {
-            case _GameMode::Easy:
-                d = _GameMode::Medium;
-                break;
-            case _GameMode::Medium:
-                d = _GameMode::Hard;
-                break;
-            case _GameMode::Hard:
-                d = _GameMode::Easy;
-                break;
-            }
+            d = (d%GAME_GOAL_STEPS) + 1;
             GameMode.setDifficulty(d);
         }
-        switch (d) {
-        case _GameMode::Easy:
-            ClockDisplay.display(" L1");
-            break;
-        case _GameMode::Medium:
-            ClockDisplay.display(" L2");
-            break;
-        case _GameMode::Hard:
-            ClockDisplay.display(" L3");
-            break;
-        }
+        Serial.print(F("Level="));
+        Serial.println(d);
+        ClockDisplay.display('L', (d/10)%10, d%10);
         _modeSelect = true;
     }
 }

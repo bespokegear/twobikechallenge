@@ -9,7 +9,7 @@
 _GameMode GameMode;
 
 _GameMode::_GameMode() :
-    _difficulty(Medium)
+    _difficulty(1)
 {
 }
 
@@ -154,24 +154,18 @@ void _GameMode::writeClock()
     ClockDisplay.display(c1==0 ? ' ' : c1, c2, c3, 2);
 }
 
-void _GameMode::setDifficulty(Difficulty d)
+void _GameMode::setDifficulty(uint8_t d)
 {
     _difficulty = d;
 }
 
-_GameMode::Difficulty _GameMode::getDifficulty()
+uint8_t _GameMode::getDifficulty()
 {
     return _difficulty;
 }
 
 float _GameMode::goalEnergy() 
 {
-    if (_difficulty == Easy) {
-        return GAME_GOAL_EASY_WS;
-    } else if (_difficulty == Medium) {
-        return GAME_GOAL_MEDIUM_WS;
-    } else {
-        return GAME_GOAL_HARD_WS;
-    }
+    return _difficulty * GAME_GOAL_STEP_SIZE;
 }
 
