@@ -1,12 +1,11 @@
-# Add -DDEBUG to have the program write debugging to serial
-CPPFLAGS += -Wunused-variable
+CPPFLAGS += -Wno-unused-variable -Wno-deprecated-declarations -Wno-cpp -Wno-write-strings
 #CPPFLAGS += -DDEBUG
 #CPPFLAGS += -DDEBUG7SEG
 #CPPFLAGS += -DDEBUGVIN
 #CPPFLAGS += -DDEBUGLOAD
 #CPPFLAGS += -DDEBUGTIME
 #CPPFLAGS += -DDEBUGMEM
-CPPFLAGS += -DNOEEPROM
+#CPPFLAGS += -DNOEEPROM
 ARDUINO_LIBS = EEPROM Adafruit_NeoPixel
 BOARD_TAG = nano328
 #BOARD_TAG = uno

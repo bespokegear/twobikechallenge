@@ -9,8 +9,7 @@ public:
     ~VoltageSampler() {;}
 
     void update();
-    uint16_t get();
-
+    float get();
     uint8_t getPin() { return _pin; }
 
 private:
@@ -19,9 +18,9 @@ private:
     uint16_t _r2KOhm;
     uint8_t _count;
     uint8_t _idx;
-    uint16_t _lastAvg;
+    float _lastAvg;
     bool _updated;
-    uint16_t _samples[VOLTAGE_SAMPLES];
+    float _samples[VOLTAGE_SAMPLES];
 
 };
 

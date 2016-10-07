@@ -48,13 +48,12 @@ void GameMode::modeUpdate()
 {
     float elapsed = (millis() - _lastUpdate) / 1000.;
     _lastUpdate = millis();
-    float vIn1 = PEDAL1_FUDGE_FACTOR + (pedalVoltage1.get() / 100.);
-    float vIn2 = PEDAL2_FUDGE_FACTOR + (pedalVoltage2.get() / 100.);
+    float vIn1 = PEDAL1_FUDGE_FACTOR + pedalVoltage1.get();
+    float vIn2 = PEDAL2_FUDGE_FACTOR + pedalVoltage2.get();
     float power1 = vIn1 > PEDAL1_THRESHOLD ? vIn1*vIn1/PEDAL1_DUMP_R : 0; // P = (V^2)/R
     float power2 = vIn2 > PEDAL2_THRESHOLD ? vIn2*vIn2/PEDAL2_DUMP_R : 0; // P = (V^2)/R
     _energy1 += (power1 * elapsed);
     _energy2 += (power2 * elapsed);
-    
 #ifdef DEBUGVIN
     Serial.print(F("elapsed="));
     Serial.print(elapsed);
@@ -72,6 +71,8 @@ void GameMode::modeUpdate()
     Serial.println(_energy2);
 #endif
     writeClock();
+    // Throttle writing of neopixels as too-frequent writes
+    // throws off millis
     if (_lastUpdate - _lastLEDUpdate > LED_UPDATE_DELAY_MS) {
         writePixels();
         _lastLEDUpdate = _lastUpdate;

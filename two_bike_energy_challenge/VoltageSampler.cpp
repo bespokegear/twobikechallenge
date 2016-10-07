@@ -8,10 +8,12 @@ VoltageSampler::VoltageSampler(const uint8_t pin, uint16_t r1KOhm, uint16_t r2KO
     _r2KOhm(r2KOhm),
     _count(0),
     _idx(0),
-    _lastAvg(0),
+    _lastAvg(0.),
     _updated(false)
 {
-    memset((void*)_samples, 0, sizeof(uint16_t)*VOLTAGE_SAMPLES);
+    for(uint8_t i=0; i<VOLTAGE_SAMPLES; i++) {
+        _samples[i] = 0.;
+    }
 }
 
 void VoltageSampler::update() {
@@ -23,7 +25,7 @@ void VoltageSampler::update() {
     _updated = true;
 }
 
-uint16_t VoltageSampler::get() {
+float VoltageSampler::get() {
     if (!_updated) {
         return _lastAvg;
     }
