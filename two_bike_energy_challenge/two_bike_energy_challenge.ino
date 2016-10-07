@@ -11,9 +11,10 @@
 #include "GameMode.h"
 #include "Util.h"
 #include "LEDs.h"
-#include "VinMonitors.h"
+#include "Pedal1Vin.h"
+#include "Pedal2Vin.h"
+#include "ArduinoVin.h"
 #include "ClockDisplay.h"
-//#include "LEDs.h"
 #include <Arduino.h>
 #include <avr/wdt.h>
 

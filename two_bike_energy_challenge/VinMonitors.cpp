@@ -1,7 +1,0 @@
-#include "VinMonitors.h"
-#include "Config.h"
-
-VoltageSampler Pedal1Vin(PEDAL1_VOLTAGE_PIN, PEDAL1_VOLTAGE_R1, PEDAL1_VOLTAGE_R2);
-VoltageSampler Pedal2Vin(PEDAL2_VOLTAGE_PIN, PEDAL2_VOLTAGE_R1, PEDAL2_VOLTAGE_R2);
-VoltageSampler ArduinoVin(ARDUINO_VOLTAGE_PIN, ARDUINO_VOLTAGE_R1, ARDUINO_VOLTAGE_R2);
-

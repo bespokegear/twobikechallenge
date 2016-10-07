@@ -1,7 +1,7 @@
 #include "Mode.h"
 #include "Config.h"
 #include "Util.h"
-#include "VinMonitors.h"
+#include "ArduinoVin.h"
 #include <Arduino.h>
 
 Mode::Mode() :
