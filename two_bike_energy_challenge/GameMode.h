@@ -6,8 +6,13 @@
 
 class _GameMode : public Mode {
 public:
+    typedef enum eDifficulty {
+        Easy,
+        Medium,
+        Hard
+    } Difficulty;
+
     _GameMode();
-              
     void begin();
     void start();
     void stop();
@@ -20,6 +25,8 @@ public:
     void restoreFromEEPROM();
     void writePixels();
     void writeClock();
+    void setLevel(Difficulty d);
+    Difficulty getDifficulty();
 
 private:
     unsigned long _startMillis;
@@ -28,8 +35,9 @@ private:
     long _lastClock;
     float _energy1;
     float _energy2;
-    float _goal1;
-    float _goal2;
+    Difficulty _difficulty;
+
+    float goalEnergy();
 
 };
 

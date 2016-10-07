@@ -9,8 +9,7 @@
 _GameMode GameMode;
 
 _GameMode::_GameMode() :
-    _goal1(P1_GOAL_WS),
-    _goal2(P2_GOAL_WS)
+    _difficulty(Medium)
 {
 }
 
@@ -117,11 +116,11 @@ void _GameMode::writePixels()
     uint16_t i;
     bool lit;
     for (i=0; i<LED1_COUNT; i++) {
-        bool lit = ((_energy1*LED1_COUNT) / _goal1) > i;
+        bool lit = ((_energy1*LED1_COUNT) / goalEnergy()) > i;
         LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
     }
     for (i=0; i<LED2_COUNT; i++) {
-        bool lit = ((_energy2*LED2_COUNT) / _goal2) > i;
+        bool lit = ((_energy2*LED2_COUNT) / goalEnergy()) > i;
         LED2.setPixelColor(i, lit ? P2_ON_COLOR : P2_OFF_COLOR);
     }
     LED1.show();
@@ -153,5 +152,26 @@ void _GameMode::writeClock()
     uint8_t c3 = left10ths % 10;
     _lastClock = left10ths;
     ClockDisplay.display(c1==0 ? ' ' : c1, c2, c3, 2);
+}
+
+void _GameMode::setLevel(Difficulty d)
+{
+    _difficulty = d;
+}
+
+_GameMode::Difficulty _GameMode::getDifficulty()
+{
+    return _difficulty;
+}
+
+float _GameMode::goalEnergy() 
+{
+    if (_difficulty == Easy) {
+        return GAME_GOAL_EASY_WS;
+    } else if (_difficulty == Medium) {
+        return GAME_GOAL_MEDIUM_WS;
+    } else {
+        return GAME_GOAL_HARD_WS;
+    }
 }
 

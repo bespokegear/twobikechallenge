@@ -46,9 +46,9 @@
 #define P1_OFF_COLOR                0x000000UL
 #define P2_ON_COLOR                 0x00FF00UL
 #define P2_OFF_COLOR                0x000000UL
-// in WattSeconds
-#define P1_GOAL_WS                  2500
-#define P2_GOAL_WS                  2500
+#define GAME_GOAL_EASY_WS           2500
+#define GAME_GOAL_MEDIUM_WS         5000
+#define GAME_GOAL_HARD_WS           7500
 #define GAME_LENGTH_SECONDS         30
 
 // Other mode settings
