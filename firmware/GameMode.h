@@ -19,8 +19,8 @@ public:
     void restoreFromEEPROM();
     void writePixels();
     void writeClock();
-    void setDifficulty(uint8_t d);
-    uint8_t getDifficulty();
+    void setLevel(uint8_t d);
+    uint8_t getLevel();
 
 private:
     unsigned long _startMillis;

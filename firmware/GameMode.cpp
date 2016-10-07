@@ -160,12 +160,12 @@ void _GameMode::writeClock()
     ClockDisplay.display(c1==0 ? ' ' : c1, c2, c3, 2);
 }
 
-void _GameMode::setDifficulty(uint8_t d)
+void _GameMode::setLevel(uint8_t d)
 {
     _difficulty = d;
 }
 
-uint8_t _GameMode::getDifficulty()
+uint8_t _GameMode::getLevel()
 {
     return _difficulty;
 }

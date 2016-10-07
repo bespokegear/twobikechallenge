@@ -31,12 +31,12 @@ void _WaitMode::stop()
 #endif
     // Check to see if the level in EEPROM is different from the level
     // in GameMode, and save if necessary
-    if (GameMode.getDifficulty() != EEPROM.read(EEPROM_LEVEL_ADDRESS)) {
+    if (GameMode.getLevel() != EEPROM.read(EEPROM_LEVEL_ADDRESS)) {
 #ifdef DEBUG
         Serial.print("Saving modified GameMode level to EEPROM");
 #endif
 #ifndef NOEEPROM
-        EEPROM.write(EEPROM_LEVEL_ADDRESS, GameMode.getDifficulty());
+        EEPROM.write(EEPROM_LEVEL_ADDRESS, GameMode.getLevel());
 #endif
     }
 }
@@ -47,10 +47,10 @@ void _WaitMode::modeUpdate()
 #ifdef DEBUG
     Serial.println(F("WaitMode mode button pressed."));
 #endif
-        uint8_t d = GameMode.getDifficulty();
+        uint8_t d = GameMode.getLevel();
         if (_modeSelect) {
             d = (d%GAME_LEVEL_MAX) + 1;
-            GameMode.setDifficulty(d);
+            GameMode.setLevel(d);
         }
         Serial.print(F("Level="));
         Serial.println(d);
