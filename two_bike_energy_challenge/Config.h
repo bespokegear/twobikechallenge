@@ -19,6 +19,7 @@
 #define ARDUINO_VOLTAGE_R1          10
 #define ARDUINO_VOLTAGE_R2          100
 #define RESET_BUTTON_PIN            2
+#define MODE_BUTTON_PIN             5
 #define HEARTBEAT_LED_PIN           13
 #define INDICATOR_LED_PIN           9
 #define BROWNOUT_HIGH               1300

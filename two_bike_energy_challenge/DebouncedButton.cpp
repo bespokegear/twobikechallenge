@@ -7,10 +7,14 @@ DebouncedButton::DebouncedButton(uint8_t pin, bool pullup) :
     _count(0),
     _last(0)
 {
-    if (pullup)
-        pinMode(pin, INPUT_PULLUP);
+}
+
+void DebouncedButton::begin()
+{
+    if (_pullup)
+        pinMode(_pin, INPUT_PULLUP);
     else
-        pinMode(pin, INPUT);
+        pinMode(_pin, INPUT);
 }
 
 void DebouncedButton::update()

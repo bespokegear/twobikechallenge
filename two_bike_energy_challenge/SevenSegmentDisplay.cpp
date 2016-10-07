@@ -208,6 +208,9 @@ uint8_t SevenSegmentDisplay::int7segment (uint8_t segmentData)
     case 'h':
         displayData = 0B00101110;  
         break;
+    case 'L':
+        displayData = 0B00011100;  
+        break;
     default:
         displayData = 0B00000000;
         break;

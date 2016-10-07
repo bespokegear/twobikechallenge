@@ -5,7 +5,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "Config.h"
 #include "Heartbeat.h"
-#include "DebouncedButton.h"
+#include "Buttons.h"
 #include "WaitMode.h"
 #include "CountdownMode.h"
 #include "GameMode.h"
@@ -23,7 +23,6 @@
 // Global variables
 
 Heartbeat* heartbeat;
-DebouncedButton* resetButton;
 Mode* mode = &WaitMode;
 
 #ifdef DEBUGTIME
@@ -40,8 +39,9 @@ void setup()
     // Set up the blinker
     heartbeat = new Heartbeat(HEARTBEAT_LED_PIN);
 
-    // Construct input buttons (sets pin modes in constructor)
-    resetButton = new DebouncedButton(RESET_BUTTON_PIN);
+    // Init buttons (set pin modes)
+    ResetButton.begin();
+    ModeButton.begin();
 
     // init pins for clock display
     ClockDisplay.begin();
@@ -132,7 +132,8 @@ void loop()
 
     // Give a time slice to various peripheral functions
     heartbeat->update();
-    resetButton->update();
+    ResetButton.update();
+    ModeButton.update();
     PedalVoltage1.update();
     PedalVoltage2.update();
     ArduinoVoltage.update();
@@ -141,7 +142,7 @@ void loop()
     loopDebug();
 
     // Detect button presses and behave appropriately
-    if (resetButton->isPressed()) {
+    if (ResetButton.isPressed()) {
 #ifdef DEBUG
         Serial.println(F("BUTTON: starting countdown"));
 #endif

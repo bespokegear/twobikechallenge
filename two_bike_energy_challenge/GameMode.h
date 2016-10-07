@@ -25,7 +25,7 @@ public:
     void restoreFromEEPROM();
     void writePixels();
     void writeClock();
-    void setLevel(Difficulty d);
+    void setDifficulty(Difficulty d);
     Difficulty getDifficulty();
 
 private:

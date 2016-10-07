@@ -8,6 +8,7 @@
 class DebouncedButton {
 public:
     DebouncedButton(uint8_t pin, bool pullup=true);
+    virtual void begin();
     virtual void update();
     bool isPressed();
     bool valueNow();

@@ -154,7 +154,7 @@ void _GameMode::writeClock()
     ClockDisplay.display(c1==0 ? ' ' : c1, c2, c3, 2);
 }
 
-void _GameMode::setLevel(Difficulty d)
+void _GameMode::setDifficulty(Difficulty d)
 {
     _difficulty = d;
 }
