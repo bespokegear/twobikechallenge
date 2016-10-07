@@ -4,18 +4,6 @@
 float voltageConversion(const uint8_t pin, const uint16_t r1KOhm, const uint16_t r2KOhm)
 {
     float raw = analogRead(pin);
-#ifdef DEBUGVIN
-    if (pin==15) {
-        Serial.print(F("Vin pin="));
-        Serial.print(pin);
-        Serial.print(F(" r1="));
-        Serial.print(r1KOhm);
-        Serial.print(F(" r2="));
-        Serial.print(r2KOhm);
-        Serial.print(F(" raw="));
-        Serial.println(raw);
-    }
-#endif
     return (raw*3.3*(r1KOhm+r2KOhm)) / (1024*r1KOhm);
 }
 
