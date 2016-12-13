@@ -19,15 +19,18 @@ void DebouncedButton::begin(uint8_t threshold, uint8_t delay)
 // over-rides RawButton::isPressed
 bool DebouncedButton::isPressed(bool once)
 {
-    if (!once)
-        return _state;
-
-    if (_state) {
+    if (!once) {
+        if (millis() > _lastRepeat + DEBOUNCED_BUTTON_REPEAT_MS) {
+            _lastRepeat = millis();
+            return _state;
+        } else {
+            return false;
+        }
+    } else if (_state) {
         if (_released) {
             _released = false;
             return true;
         } 
-
     }
     return false;
 }

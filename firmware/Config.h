@@ -20,6 +20,7 @@
 #define ARDUINO_VOLTAGE_R2          100
 #define DEBOUNCED_BUTTON_THRESHOLD  4
 #define DEBOUNCED_BUTTON_DELAY      4
+#define DEBOUNCED_BUTTON_REPEAT_MS  350
 #define RESET_BUTTON_PIN            2
 #define MODE_BUTTON_PIN             5
 #define RESET_RADIO_PIN             A4

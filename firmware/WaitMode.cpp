@@ -40,7 +40,7 @@ void _WaitMode::stop()
 
 void _WaitMode::modeUpdate()
 {
-    if (ModeButton.wasPressed()) {
+    if (ModeButton.isPressed(false)) {
 #ifdef DEBUG
     Serial.println(F("WaitMode mode button pressed."));
 #endif

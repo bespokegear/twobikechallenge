@@ -27,6 +27,7 @@ private:
     uint8_t _threshold;
     uint8_t _delay;
     unsigned long _lastUpdate;
+    unsigned long _lastRepeat;
     uint8_t _counter;
     bool _state;
     unsigned long _lastStateChange;

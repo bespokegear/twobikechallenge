@@ -8,7 +8,7 @@ public:
     void begin() { _b1->begin(); _b2->begin(); }
     void update() { _b1->update(); _b2->update(); }
     bool wasPressed() { return _b1->wasPressed() || _b2->wasPressed(); }
-    bool isPressed() { return _b1->isPressed() || _b2->isPressed(); }
+    bool isPressed(bool once=true) { return _b1->isPressed(once) || _b2->isPressed(once); }
 
 private:
     DebouncedButton* _b1;
