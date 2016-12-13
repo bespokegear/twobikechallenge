@@ -1,7 +1,8 @@
 CPPFLAGS += -Wno-unused-variable -Wno-deprecated-declarations -Wno-cpp -Wno-write-strings
 #CPPFLAGS += -DDEBUG
+#CPPFLAGS += -DDEBUGMODE
 #CPPFLAGS += -DDEBUG7SEG
-CPPFLAGS += -DDEBUGVIN
+#CPPFLAGS += -DDEBUGVIN
 #CPPFLAGS += -DDEBUGLOAD
 #CPPFLAGS += -DDEBUGTIME
 #CPPFLAGS += -DDEBUGMEM

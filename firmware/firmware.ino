@@ -101,7 +101,7 @@ void setup()
 
 void loopDebug()
 {
-#ifdef DEBUG
+#ifdef DEBUGMODE
     if (mode == &WaitMode) {
         Serial.println(F("in WaitMode"));
     }
