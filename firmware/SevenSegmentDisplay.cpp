@@ -58,15 +58,32 @@ void SevenSegmentDisplay::display(int16_t i, bool zeroPad)
     }
 }
 
+#ifdef DEBUG7SEG
+char disp_char(uint8_t c)
+{
+    if (c>31 && c<127)
+        return (char)c;
+    else if (c<=9)
+        return '0' + c;
+    else
+        return ' ';
+}
+#endif
+
 void SevenSegmentDisplay::display(uint8_t c1, uint8_t c2, uint8_t c3, uint8_t decimalPosition)
 {
 #ifdef DEBUG7SEG
-    Serial.print(F("SevenSegmentDisplay::display, digits: "));
-    Serial.print(c1);
+    Serial.print(F("SevenSegmentDisplay::display \""));
+    Serial.print(disp_char(c1));
+    Serial.print(disp_char(c2));
+    Serial.print(disp_char(c3));
+    Serial.print(F("\" [hex "));
+    Serial.print(c1, HEX);
     Serial.print(' ');
-    Serial.print(c2);
+    Serial.print(c2, HEX);
     Serial.print(' ');
-    Serial.println(c3);
+    Serial.print(c3, HEX);
+    Serial.print(']');
 #endif
     // Set latch low so the LED1 don't change while sending in bits
     digitalWrite(_SLatchPin, LOW);
