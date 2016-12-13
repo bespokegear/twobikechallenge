@@ -1,5 +1,10 @@
-#include "LatchedButton.h"
+#pragma once
+
+#include "DebouncedButton.h"
+#include "DualButton.h"
 #include "Config.h"
 
-LatchedButton ModeButton(MODE_BUTTON_PIN);
+DebouncedButton ModeButtonWired(MODE_BUTTON_PIN);
+DebouncedButton ModeButtonRadio(MODE_RADIO_PIN, false);
+DualButton ModeButton(&ModeButtonWired, &ModeButtonRadio);
 

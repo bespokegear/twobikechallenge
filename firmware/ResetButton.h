@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DebouncedButton.h"
+#include "DualButton.h"
 
-extern DebouncedButton ResetButton;
-
+extern DualButton ResetButton;
