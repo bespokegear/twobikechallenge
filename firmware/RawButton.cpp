@@ -16,7 +16,7 @@ void RawButton::begin()
     }
 }
 
-bool RawButton::isPressed()
+bool RawButton::on()
 {
     if (_pullup) {
         return !digitalRead(_pin);

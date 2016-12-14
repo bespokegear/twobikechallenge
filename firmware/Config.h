@@ -18,9 +18,6 @@
 #define ARDUINO_VOLTAGE_PIN         A6
 #define ARDUINO_VOLTAGE_R1          10
 #define ARDUINO_VOLTAGE_R2          100
-#define DEBOUNCED_BUTTON_THRESHOLD  4
-#define DEBOUNCED_BUTTON_DELAY      4
-#define DEBOUNCED_BUTTON_REPEAT_MS  350
 #define RESET_BUTTON_PIN            2
 #define MODE_BUTTON_PIN             5
 #define RESET_RADIO_PIN             A4
@@ -34,6 +31,13 @@
 #define SCLK_PIN                    11
 #define SDATA_PIN                   12
 #define EEPROM_LEVEL_ADDRESS        0
+
+// Button feel settings
+#define DEBOUNCED_BUTTON_THRESHOLD      5
+#define DEBOUNCED_BUTTON_DELAY          5
+#define DEBOUNCED_BUTTON_HELD_MS        800
+#define DEBOUNCED_BUTTON_RPT_INITIAL_MS 1000
+#define DEBOUNCED_BUTTON_RPT_MS         300
 
 // LED strip parameters
 // This is for initialising the Adafruit_NeoPixel library

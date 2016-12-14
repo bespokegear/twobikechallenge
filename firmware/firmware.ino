@@ -161,7 +161,7 @@ void loop()
     loopDebug();
 
     // Detect button presses and behave appropriately
-    if (ResetButton.isPressed()) {
+    if (ResetButton.pushed()) {
         if (mode == &WaitMode) {
             switchMode(&CountdownMode);
         } else if (mode == &GameMode) {

@@ -16,8 +16,8 @@ void _WaitMode::start()
 #ifdef DEBUG
     Serial.println(F("WaitMode::start()"));
 #endif
-    // In case the mode button was pressed while in another mode, clear it.
-    ModeButton.wasPressed();
+    // In case the mode button was pushed while in another mode, clear it.
+    ModeButton.pushed();
     _modeSelect = false;
 }
 
@@ -40,9 +40,9 @@ void _WaitMode::stop()
 
 void _WaitMode::modeUpdate()
 {
-    if (ModeButton.isPressed(false)) {
+    if (ModeButton.repeat()) {
 #ifdef DEBUG
-    Serial.println(F("WaitMode mode button pressed."));
+        Serial.println(F("WaitMode mode button pressed."));
 #endif
         uint8_t d = GameMode.getLevel();
         if (_modeSelect) {
