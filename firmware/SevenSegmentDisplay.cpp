@@ -83,7 +83,7 @@ void SevenSegmentDisplay::display(uint8_t c1, uint8_t c2, uint8_t c3, uint8_t de
     Serial.print(c2, HEX);
     Serial.print(' ');
     Serial.print(c3, HEX);
-    Serial.print(']');
+    Serial.println(']');
 #endif
     // Set latch low so the LED1 don't change while sending in bits
     digitalWrite(_SLatchPin, LOW);
