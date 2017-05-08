@@ -136,16 +136,31 @@ void _GameMode::writePixels()
 bool _GameMode::isFinished()
 {
     if ((millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
-        if (_energy1 > _energy2) {
+        switch(getWinner()) {
+        case 1:
             ClockDisplay.display("P1!");
-        } else if (_energy2 > _energy1) {
+            break;
+        case 2:
             ClockDisplay.display("P2!");
-        } else {
+            break;
+        default:
             ClockDisplay.display("1=2");
+            break;
         }
         return true;
     } else {
         return false;
+    }
+}
+
+uint8_t _GameMode::getWinner()
+{
+    if (_energy1 > _energy2) {
+        return 1;
+    } else if (_energy2 > _energy1) {
+        return 2;
+    } else {
+        return 0;
     }
 }
 

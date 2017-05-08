@@ -21,6 +21,7 @@ public:
     void writeClock();
     void setLevel(uint8_t d);
     uint8_t getLevel();
+    uint8_t getWinner();
 
 private:
     unsigned long _startMillis;
