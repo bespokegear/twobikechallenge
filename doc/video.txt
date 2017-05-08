@@ -1,0 +1,35 @@
+Video editing
+=============
+
+Training video
+- Ad to start
+- Setup
+  - image of main parts
+  - image of parts:
+    - control box
+    - genny
+    - timer
+    - LEDs
+  - bike on generator
+  - roll adjustment
+  - plug in bike
+  - plug in LEDs
+  - plug in timer
+  - plug in power
+- Operation
+  - Press reset
+  - see countdowns
+  - pedalling example with incrementing
+  - winner 
+- Adjustment
+  - level button usage
+
+Ad
+- reset pressed
+- number counting
+- pedalling
+- both strips illuminated
+- P1! win
+
+
+
