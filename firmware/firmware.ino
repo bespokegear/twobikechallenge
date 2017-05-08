@@ -32,6 +32,11 @@
 #include "Pedal2Vin.h"
 #include "ArduinoVin.h"
 #include "ClockDisplay.h"
+#include "Cities.h"
+
+#ifdef DEBUGMEM
+#include <MemoryFree.h>
+#endif
 
 // General Arduino features
 #include <Arduino.h>
@@ -79,6 +84,8 @@ void setup()
     LED2.clear();
     LED1.show(); // Initialize all pixels to 'off'
     LED2.show(); // Initialize all pixels to 'off'
+
+    Cities.begin();
 
     // init various modes
     WaitMode.begin();

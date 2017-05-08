@@ -39,16 +39,19 @@
 #define DEBOUNCED_BUTTON_RPT_INITIAL_MS 1000
 #define DEBOUNCED_BUTTON_RPT_MS         300
 
+#define CITY_COUNT                  10
+#define CITY_SIZE                   4
+
 // LED strip parameters
 // This is for initialising the Adafruit_NeoPixel library
 // and will depend on the LED type
 #define LED1_TYPE                   (NEO_GRB + NEO_KHZ800)
 #define LED1_DATA_PIN               3
-#define LED1_COUNT                  109
+#define LED1_COUNT                  (CITY_SIZE*(CITY_COUNT/2))
 #define LED1_BRIGHTNESS             255
 #define LED2_TYPE                   (NEO_GRB + NEO_KHZ800)
 #define LED2_DATA_PIN               4
-#define LED2_COUNT                  109
+#define LED2_COUNT                  ((CITY_COUNT-(CITY_COUNT/2))*CITY_SIZE)
 #define LED2_BRIGHTNESS             255
 #define LED_UPDATE_DELAY_MS         100
 

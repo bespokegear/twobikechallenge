@@ -1,5 +1,5 @@
 CPPFLAGS += -Wno-unused-variable -Wno-deprecated-declarations -Wno-cpp -Wno-write-strings
-#CPPFLAGS += -DDEBUG
+CPPFLAGS += -DDEBUG
 #CPPFLAGS += -DDEBUGMODE
 #CPPFLAGS += -DDEBUG7SEG
 #CPPFLAGS += -DDEBUGVIN
@@ -7,7 +7,7 @@ CPPFLAGS += -Wno-unused-variable -Wno-deprecated-declarations -Wno-cpp -Wno-writ
 #CPPFLAGS += -DDEBUGTIME
 #CPPFLAGS += -DDEBUGMEM
 #CPPFLAGS += -DNOEEPROM
-ARDUINO_LIBS = EEPROM Adafruit_NeoPixel
+ARDUINO_LIBS = EEPROM Adafruit_NeoPixel MemoryFree
 BOARD_TAG = nano328
 #BOARD_TAG = uno
 
