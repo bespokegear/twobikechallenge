@@ -40,7 +40,8 @@
 #define DEBOUNCED_BUTTON_RPT_MS         300
 
 #define CITY_COUNT                  10
-#define CITY_SIZE                   4
+// Size of city in LEDs
+#define CITY_SIZE                   24
 
 // LED strip parameters
 // This is for initialising the Adafruit_NeoPixel library

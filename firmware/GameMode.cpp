@@ -103,7 +103,7 @@ void _GameMode::modeUpdate()
     // Throttle writing of neopixels as too-frequent writes
     // throws off millis
     if (_lastUpdate - _lastLEDUpdate > LED_UPDATE_DELAY_MS) {
-        writePixels();
+        Cities.display();
         _lastLEDUpdate = _lastUpdate;
     }
 }
@@ -136,14 +136,6 @@ void _GameMode::restoreFromEEPROM()
 #endif
 }
 
-void _GameMode::writePixels()
-{
-#ifdef DEBUG
-    Serial.println(F("GameMode::writePixels"));
-#endif
-    Cities.display();
-}
-
 bool _GameMode::isFinished()
 {
     if ((millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
@@ -166,12 +158,20 @@ bool _GameMode::isFinished()
 
 uint8_t _GameMode::getWinner()
 {
-    if (_energy1 > _energy2) {
+    if (Cities.cityCountForPlayer(1) > Cities.cityCountForPlayer(2)) {
         return 1;
-    } else if (_energy2 > _energy1) {
+    } else if (Cities.cityCountForPlayer(2) > Cities.cityCountForPlayer(1)) {
         return 2;
     } else {
-        return 0;
+        // equal number of cities - decide by energy
+        if (_energy1 > _energy2) {
+            return 1;
+        } else if (_energy2 > _energy1) {
+            return 2;
+        } else {
+            // both city count and total energy the same - draw!
+            return 0;
+        }
     }
 }
 
