@@ -42,28 +42,22 @@ void Cities_::clear()
     for (uint8_t i=0; i<CITY_COUNT; i++) {
         _cities[i].wonBy = 0;
     }
+    _nextCity = 0;
     display();
 }
 
 void Cities_::winCity(uint8_t player)
 {
-    // sanity check param
-    if (player<1 || player>2) return;
-
-    for (uint8_t i=0; i<CITY_COUNT; i++) {
-        // Interate over cities until we find a city which isn't won yet
-        if (_cities[i].wonBy == 0) {
-            // set the winner
+    // sanity check param / state
+    if (player<1 || player>2 || _nextCity >= CITY_COUNT) return;
 #ifdef DEBUGCITY
-            Serial.print(F("winCity #"));
-            Serial.print(i);
-            Serial.print(' ');
-            Serial.println(player);
+    Serial.print(F("winCity #"));
+    Serial.print(_nextCity);
+    Serial.print(' ');
+    Serial.println(player);
 #endif
-            _cities[i].wonBy = player;
-            return;
-        }
-    }
+    _cities[_nextCity].wonBy = player;
+    _nextCity++;
 }
 
 void Cities_::display()

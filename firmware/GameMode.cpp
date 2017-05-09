@@ -5,6 +5,7 @@
 #include "LED1.h"
 #include "LED2.h"
 #include "ClockDisplay.h"
+#include "Cities.h"
 #include <Arduino.h>
 #include <EEPROM.h>
 
@@ -40,7 +41,11 @@ void _GameMode::start()
     _startMillis = millis();
     _lastUpdate = _startMillis;
     _lastLEDUpdate = _startMillis;
-    writePixels();
+#ifdef DEBUG
+    _lastDebug = _startMillis;
+#endif
+    _nextCityEnergy = (Cities.nextCity()+1)*goalEnergy() / CITY_COUNT;
+    Cities.clear();
 }
 
 void _GameMode::stop()
@@ -66,18 +71,35 @@ void _GameMode::modeUpdate()
     _energy1 += (power1 * elapsed);
     _energy2 += (power2 * elapsed);
 #ifdef DEBUG
-    Serial.print(F("Game elapsed="));
-    Serial.print(elapsed);
-    Serial.print(F(" pow1="));
-    Serial.print(power1);
-    Serial.print(F(" pow2="));
-    Serial.print(power2);
-    Serial.print(F(" e1="));
-    Serial.print(_energy1);
-    Serial.print(F(" e2="));
-    Serial.println(_energy2);
+    if (_lastUpdate > _lastDebug + 500) {
+        _lastDebug = _lastUpdate;
+        Serial.print(F("Game elapsed="));
+        Serial.print(elapsed);
+        Serial.print(F(" pow1="));
+        Serial.print(power1);
+        Serial.print(F(" pow2="));
+        Serial.print(power2);
+        Serial.print(F(" e1="));
+        Serial.print(_energy1);
+        Serial.print(F(" e2="));
+        Serial.print(_energy2);
+        Serial.print(F(" p1wins="));
+        Serial.print(Cities.cityCountForPlayer(1));
+        Serial.print(F(" p2wins="));
+        Serial.print(Cities.cityCountForPlayer(2));
+        Serial.print(F(" City#="));
+        Serial.print(Cities.nextCity());
+        Serial.print(F(" CityEn="));
+        Serial.println(_nextCityEnergy);
+    }
 #endif
     writeClock();
+
+    // Check to see if we passed the energy necessary to win a city
+    if (_energy1 >= _nextCityEnergy || _energy2 >= _nextCityEnergy) {
+        Cities.winCity(_energy1 > _energy2 ? 1 : 2);
+        _nextCityEnergy = (Cities.nextCity()+1)*goalEnergy() / CITY_COUNT;
+    }
     // Throttle writing of neopixels as too-frequent writes
     // throws off millis
     if (_lastUpdate - _lastLEDUpdate > LED_UPDATE_DELAY_MS) {
@@ -119,18 +141,7 @@ void _GameMode::writePixels()
 #ifdef DEBUG
     Serial.println(F("GameMode::writePixels"));
 #endif
-    uint16_t i;
-    bool lit;
-    for (i=0; i<LED1_COUNT; i++) {
-        bool lit = ((_energy1*LED1_COUNT) / goalEnergy()) > i;
-        LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
-    }
-    for (i=0; i<LED2_COUNT; i++) {
-        bool lit = ((_energy2*LED2_COUNT) / goalEnergy()) > i;
-        LED2.setPixelColor(i, lit ? P2_ON_COLOR : P2_OFF_COLOR);
-    }
-    LED1.show();
-    LED2.show();
+    Cities.display();
 }
 
 bool _GameMode::isFinished()

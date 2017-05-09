@@ -31,8 +31,12 @@ public:
     // Get how many cites are currently won by specified player
     uint8_t cityCountForPlayer(uint8_t player);
 
+    // Get the next city number
+    uint8_t nextCity() { return _nextCity; }
+
 private:
     City _cities[CITY_COUNT];
+    uint8_t _nextCity;
 
     unsigned long getColor(uint8_t player);
 

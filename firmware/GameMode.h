@@ -27,10 +27,14 @@ private:
     unsigned long _startMillis;
     unsigned long _lastUpdate;
     unsigned long _lastLEDUpdate;
+#ifdef DEBUG
+    unsigned long _lastDebug;
+#endif
     long _lastClock;
     float _energy1;
     float _energy2;
     uint8_t _difficulty;
+    float _nextCityEnergy;
 
     float goalEnergy();
 
