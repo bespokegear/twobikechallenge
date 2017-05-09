@@ -23,7 +23,7 @@ public:
     void clear();  
 
     // Set a city color to be won by specified player
-    void setCityWinner(uint8_t cityID, uint8_t player);
+    void winCity(uint8_t player);
 
     // Update display and send data to LEDs
     void display();
@@ -34,8 +34,6 @@ public:
 private:
     City _cities[CITY_COUNT];
 
-    uint8_t cityIDToLEDStrip(uint8_t i);
-    uint8_t cityIDToStripIdx(uint8_t i);
     unsigned long getColor(uint8_t player);
 
 };
