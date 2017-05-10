@@ -10,16 +10,20 @@ Cities_::Cities_()
     // Mapping of LED chunks to city ID - EDIT THIS if
     // you want to re-arrange which city ID maps to which
     // chunk of LEDs...
-    _cities[0].LEDStrip = 1; _cities[0].stripIdx = 0;
-    _cities[1].LEDStrip = 1; _cities[1].stripIdx = 1;
-    _cities[2].LEDStrip = 1; _cities[2].stripIdx = 2;
-    _cities[3].LEDStrip = 1; _cities[3].stripIdx = 3;
-    _cities[4].LEDStrip = 1; _cities[4].stripIdx = 4;
-    _cities[5].LEDStrip = 2; _cities[5].stripIdx = 0;
-    _cities[6].LEDStrip = 2; _cities[6].stripIdx = 1;
-    _cities[7].LEDStrip = 2; _cities[7].stripIdx = 2;
-    _cities[8].LEDStrip = 2; _cities[8].stripIdx = 3;
-    _cities[9].LEDStrip = 2; _cities[9].stripIdx = 4;
+    // ID     2 3 7 6 1 0 8 9  5 4
+    // Label  3 4 8 7 2 1 9 10 6 5 
+    // LED    1 1 1 1 1 2 2 2  2 2 
+    // Idx    0 1 2 3 4 0 1 2  3 4
+    _cities[0].LEDStrip = 2; _cities[0].stripIdx = 0;
+    _cities[1].LEDStrip = 1; _cities[1].stripIdx = 4;
+    _cities[2].LEDStrip = 1; _cities[2].stripIdx = 0;
+    _cities[3].LEDStrip = 1; _cities[3].stripIdx = 1;
+    _cities[4].LEDStrip = 2; _cities[4].stripIdx = 4;
+    _cities[5].LEDStrip = 2; _cities[5].stripIdx = 3;
+    _cities[6].LEDStrip = 1; _cities[6].stripIdx = 3;
+    _cities[7].LEDStrip = 1; _cities[7].stripIdx = 2;
+    _cities[8].LEDStrip = 2; _cities[8].stripIdx = 1;
+    _cities[9].LEDStrip = 2; _cities[9].stripIdx = 2;
 }
 
 void Cities_::begin()
