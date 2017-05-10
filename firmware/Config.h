@@ -59,7 +59,7 @@
 // GameMode parameters
 #define P1_ON_COLOR                 0xFF0000UL
 #define P1_OFF_COLOR                0x000000UL
-#define P2_ON_COLOR                 0x00FF00UL
+#define P2_ON_COLOR                 0x0000FFUL
 #define P2_OFF_COLOR                0x000000UL
 #define GAME_LEVEL_ENERGY_STEP      1000
 #define GAME_LEVEL_MAX              20
