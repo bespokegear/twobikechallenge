@@ -44,8 +44,8 @@ void _GameMode::start()
 #ifdef DEBUG
     _lastDebug = _startMillis;
 #endif
-    _nextCityEnergy = (Cities.nextCity()+1)*goalEnergy() / CITY_COUNT;
     Cities.clear();
+    _nextCityEnergy = (Cities.nextCity()+1)*goalEnergy() / CITY_COUNT;
 }
 
 void _GameMode::stop()
