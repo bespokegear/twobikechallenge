@@ -1,6 +1,7 @@
 #include "Cities.h"
 #include "LED1.h"
 #include "LED2.h"
+#include "Millis.h"
 #include <Arduino.h>
 
 Cities_ Cities;
@@ -61,7 +62,7 @@ void Cities_::winCity(uint8_t player)
     Serial.println(player);
 #endif
     _cities[_nextCity].wonBy = player;
-    _cities[_nextCity].wonMs = millis();
+    _cities[_nextCity].wonMs = Millis();
     _nextCity++;
 }
 
@@ -77,7 +78,7 @@ void Cities_::display()
         uint8_t startPixel = _cities[i].stripIdx*CITY_SIZE;
         for (uint8_t p=0; p<CITY_SIZE; p++) {
             unsigned long color = 0;
-            if (_cities[i].wonBy!=0 && millis() > _cities[i].wonMs + p*(100/CITY_COUNT)) {
+            if (_cities[i].wonBy!=0 && Millis() > _cities[i].wonMs + p*(100/CITY_COUNT)) {
                 color = getColor(_cities[i].wonBy);
             }
 #ifdef DEBUGDISP

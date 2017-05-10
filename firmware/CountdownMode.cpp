@@ -3,6 +3,7 @@
 #include "ClockDisplay.h"
 #include "LED1.h"
 #include "LED2.h"
+#include "Millis.h"
 #include <stdint.h>
 #include <Arduino.h>
 
@@ -25,7 +26,7 @@ void _CountdownMode::start()
 #ifdef DEBUG
     Serial.println(F("CountdownMode::start()"));
 #endif
-    _start = millis();
+    _start = Millis();
     _lastSent = -1;
 }
 
@@ -70,7 +71,7 @@ void _CountdownMode::modeUpdate()
 
 int8_t _CountdownMode::seconds()
 {
-    return COUNTDOWN_SECONDS - ((millis()-_start)/1000);
+    return COUNTDOWN_SECONDS - ((Millis()-_start)/1000);
 }
 
 bool _CountdownMode::isFinished()

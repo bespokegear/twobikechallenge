@@ -1,5 +1,5 @@
-#include "Adafruit_NeoPixel.h"
+#include "LED.h"
 #include "Config.h"
 
-Adafruit_NeoPixel LED2(LED2_COUNT, LED2_DATA_PIN, LED2_TYPE);
+LED LED2(LED2_COUNT, LED2_DATA_PIN, LED2_TYPE);
 

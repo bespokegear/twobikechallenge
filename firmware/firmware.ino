@@ -33,6 +33,7 @@
 #include "ArduinoVin.h"
 #include "ClockDisplay.h"
 #include "Cities.h"
+#include "Millis.h"
 
 #ifdef DEBUGMEM
 #include <MemoryFree.h>
@@ -125,8 +126,8 @@ void loopDebug()
 
 #ifdef DEBUGTIME
     Serial.print(F("looptime="));
-    Serial.println(millis() - lastLoop);
-    lastLoop = millis();
+    Serial.println(Millis() - lastLoop);
+    lastLoop = Millis();
 #endif
 
 #ifdef DEBUGVIN

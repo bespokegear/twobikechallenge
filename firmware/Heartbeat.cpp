@@ -1,5 +1,6 @@
 #include "Heartbeat.h"
 #include "Config.h"
+#include "Millis.h"
 #include <Arduino.h>
 
 _Heartbeat Heartbeat(HEARTBEAT_LED_PIN);
@@ -55,7 +56,7 @@ void _Heartbeat::setMode(Mode mode)
 void _Heartbeat::update()
 {
     unsigned long wait = _pinState ? _onTime : _offTime;
-    if (millis() - _lastStateFlip >= wait) {
+    if (Millis() - _lastStateFlip >= wait) {
         updatePin(!_pinState);
     }
 }
@@ -64,7 +65,7 @@ void _Heartbeat::updatePin(bool state)
 {
     _pinState = state;
     digitalWrite(_pin, _pinState);
-    _lastStateFlip = millis();
+    _lastStateFlip = Millis();
 }
 
 

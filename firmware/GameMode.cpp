@@ -6,6 +6,7 @@
 #include "LED2.h"
 #include "ClockDisplay.h"
 #include "Cities.h"
+#include "Millis.h"
 #include <Arduino.h>
 #include <EEPROM.h>
 
@@ -38,7 +39,7 @@ void _GameMode::start()
 #endif
     _energy1 = 0;
     _energy2 = 0;
-    _startMillis = millis();
+    _startMillis = Millis();
     _lastUpdate = _startMillis;
     _lastLEDUpdate = _startMillis;
 #ifdef DEBUG
@@ -62,8 +63,8 @@ void _GameMode::reset()
 
 void _GameMode::modeUpdate()
 {
-    float elapsed = (millis() - _lastUpdate) / 1000.;
-    _lastUpdate = millis();
+    float elapsed = (Millis() - _lastUpdate) / 1000.;
+    _lastUpdate = Millis();
     float vIn1 = PEDAL1_FUDGE_FACTOR + Pedal1Vin.get();
     float vIn2 = PEDAL2_FUDGE_FACTOR + Pedal2Vin.get();
     float power1 = vIn1 > PEDAL1_THRESHOLD ? vIn1*vIn1/PEDAL1_DUMP_R : 0; // P = (V^2)/R
@@ -138,7 +139,7 @@ void _GameMode::restoreFromEEPROM()
 
 bool _GameMode::isFinished()
 {
-    if ((millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
+    if ((Millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
         switch(getWinner()) {
         case 1:
             ClockDisplay.display("P1!");
@@ -177,7 +178,7 @@ uint8_t _GameMode::getWinner()
 
 void _GameMode::writeClock()
 {
-    long left10ths = ((_startMillis + GAME_LENGTH_SECONDS * 1000) - millis())/100;
+    long left10ths = ((_startMillis + GAME_LENGTH_SECONDS * 1000) - Millis())/100;
     if (left10ths == _lastClock) { return; }
     uint8_t c1 = (left10ths / 100) % 10;
     uint8_t c2 = (left10ths / 10) % 10;

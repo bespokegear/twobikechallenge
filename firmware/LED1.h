@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Adafruit_NeoPixel.h>
+#include "LED.h"
 
-extern Adafruit_NeoPixel LED1;
+extern LED LED1;
 
