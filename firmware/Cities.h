@@ -5,10 +5,10 @@
 
 struct City
 {
-    uint8_t LEDStrip;  // City is on LEDx
-    uint8_t stripIdx;  // City position on specified strip
-    uint8_t wonBy;     // City currently won by player wonBy
-
+    uint8_t LEDStrip;    // City is on LEDx
+    uint8_t stripIdx;    // City position on specified strip
+    uint8_t wonBy;       // City currently won by player wonBy
+    unsigned long wonMs; // millis when city was won (for animation)
 };
 
 class Cities_ {

@@ -61,6 +61,7 @@ void Cities_::winCity(uint8_t player)
     Serial.println(player);
 #endif
     _cities[_nextCity].wonBy = player;
+    _cities[_nextCity].wonMs = millis();
     _nextCity++;
 }
 
@@ -73,17 +74,18 @@ void Cities_::display()
         Serial.print(F(" on LED="));
         Serial.println(_cities[i].LEDStrip);
 #endif
-        for (uint8_t p=_cities[i].stripIdx*CITY_SIZE; p<(_cities[i].stripIdx+1)*CITY_SIZE; p++) {
+        uint8_t startPixel = _cities[i].stripIdx*CITY_SIZE;
+        for (uint8_t p=0; p<CITY_SIZE; p++) {
 #ifdef DEBUGDISP
             Serial.print(F("  pixel "));
-            Serial.print(p);
+            Serial.print(startPixel+p);
             Serial.print(F(" col=0x"));
             Serial.println(getColor(_cities[i].wonBy), HEX);
 #endif
             if (_cities[i].LEDStrip==1) {
-                LED1.setPixelColor(p, getColor(_cities[i].wonBy));
+                LED1.setPixelColor(startPixel+p, getColor(_cities[i].wonBy));
             } else if (_cities[i].LEDStrip==2) {
-                LED2.setPixelColor(p, getColor(_cities[i].wonBy));
+                LED2.setPixelColor(startPixel+p, getColor(_cities[i].wonBy));
             }
         }
     }
