@@ -54,7 +54,7 @@
 #define LED2_DATA_PIN               4
 #define LED2_COUNT                  ((CITY_COUNT-(CITY_COUNT/2))*CITY_SIZE)
 #define LED2_BRIGHTNESS             255
-#define LED_UPDATE_DELAY_MS         100
+#define LED_UPDATE_DELAY_MS         10
 
 // GameMode parameters
 #define P1_ON_COLOR                 0xFF0000UL

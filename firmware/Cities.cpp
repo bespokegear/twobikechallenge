@@ -76,16 +76,20 @@ void Cities_::display()
 #endif
         uint8_t startPixel = _cities[i].stripIdx*CITY_SIZE;
         for (uint8_t p=0; p<CITY_SIZE; p++) {
+            unsigned long color = 0;
+            if (_cities[i].wonBy!=0 && millis() > _cities[i].wonMs + p*(100/CITY_COUNT)) {
+                color = getColor(_cities[i].wonBy);
+            }
 #ifdef DEBUGDISP
             Serial.print(F("  pixel "));
             Serial.print(startPixel+p);
             Serial.print(F(" col=0x"));
-            Serial.println(getColor(_cities[i].wonBy), HEX);
+            Serial.println(color, HEX);
 #endif
             if (_cities[i].LEDStrip==1) {
-                LED1.setPixelColor(startPixel+p, getColor(_cities[i].wonBy));
+                LED1.setPixelColor(startPixel+p, color);
             } else if (_cities[i].LEDStrip==2) {
-                LED2.setPixelColor(startPixel+p, getColor(_cities[i].wonBy));
+                LED2.setPixelColor(startPixel+p, color);
             }
         }
     }
