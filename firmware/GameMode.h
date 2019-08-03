@@ -32,8 +32,7 @@ private:
     uint8_t _difficulty;
 
     float goalEnergy();
-
+    uint16_t old_lights_lit;
 };
 
 extern _GameMode GameMode;
-

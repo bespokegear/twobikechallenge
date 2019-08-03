@@ -48,8 +48,11 @@ void _CountdownMode::modeUpdate()
         _lastSent = left;
         if (left > 0) {
             ClockDisplay.display(' ', left, ' ');
+            Serial.print(F("Countdown: "));
+            Serial.println(left);
         } else {
             ClockDisplay.display("Go!");
+            Serial.println(F("Go!"));
         }
     }
     for (int i=LED1_COUNT-1; i>=0; i--) {
@@ -77,4 +80,3 @@ bool _CountdownMode::isFinished()
 {
     return seconds() < 0;
 }
-

@@ -57,8 +57,11 @@ void _GameMode::reset()
 
 void _GameMode::modeUpdate()
 {
+
+  
     float elapsed = (millis() - _lastUpdate) / 1000.;
     _lastUpdate = millis();
+    
     float vIn1 = PEDAL1_FUDGE_FACTOR + Pedal1Vin.get();
     float vIn2 = PEDAL2_FUDGE_FACTOR + Pedal2Vin.get();
     float power1 = vIn1 > PEDAL1_THRESHOLD ? vIn1*vIn1/PEDAL1_DUMP_R : 0; // P = (V^2)/R
@@ -121,28 +124,65 @@ void _GameMode::writePixels()
 #endif
     uint16_t i;
     bool lit;
+    uint16_t lights_lit;
+ 
+       
+    // OLD Code
+//    for (i=0; i<LED1_COUNT; i++) {
+//        bool lit = ((_energy1*LED1_COUNT) / goalEnergy()) > i;
+//        LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
+//    }
+//    for (i=0; i<LED2_COUNT; i++) {
+//        bool lit = ((_energy2*LED2_COUNT) / goalEnergy()) > i;
+//        LED2.setPixelColor(i, lit ? P2_ON_COLOR : P2_OFF_COLOR);
+//    }
+//    LED1.show();
+//    LED2.show();
+    // Just using LED1 to show both energy together
+    lights_lit = 0;
     for (i=0; i<LED1_COUNT; i++) {
-        bool lit = ((_energy1*LED1_COUNT) / goalEnergy()) > i;
+        bool lit = (((_energy1+_energy2)*LED1_COUNT) / goalEnergy()) > i;
+        if(lit == 1){
+          lights_lit++;
+        }
         LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
     }
-    for (i=0; i<LED2_COUNT; i++) {
-        bool lit = ((_energy2*LED2_COUNT) / goalEnergy()) > i;
-        LED2.setPixelColor(i, lit ? P2_ON_COLOR : P2_OFF_COLOR);
-    }
-    LED1.show();
-    LED2.show();
+    LED1.show();   
+    // This section outputs the lights to be lit
+    if(lights_lit != old_lights_lit) {
+      Serial.print(F("Light:"));
+      Serial.println(lights_lit);
+      old_lights_lit = lights_lit;
+    }      
 }
 
 bool _GameMode::isFinished()
 {
-    if ((millis() - _startMillis) > GAME_LENGTH_SECONDS * 1000) {
-        if (_energy1 > _energy2) {
-            ClockDisplay.display("P1!");
-        } else if (_energy2 > _energy1) {
-            ClockDisplay.display("P2!");
-        } else {
-            ClockDisplay.display("1=2");
-        }
+    // Game is finished when energy is greater than energy max
+    if ( (_energy1 + _energy2) > (GAME_LEVEL_ENERGY_STEP * _difficulty)) {
+        // Enter here when game finished
+        // Serial print the energy from each player
+        #ifdef DEBUG
+          Serial.print(F("P1 Energy: "));
+          Serial.print(_energy1);
+          Serial.print(F(" P2 Energy: "));
+          Serial.println(_energy2);
+        #endif        
+
+        // Output data for analysis
+        Serial.print(F("P1 Energy: "));
+        Serial.print(_energy1);
+        Serial.print(F(" P2 Energy: "));
+        Serial.println(_energy2);  
+        old_lights_lit = 0;
+        
+//        if (_energy1 > _energy2) {
+//            ClockDisplay.display("P1!");
+//        } else if (_energy2 > _energy1) {
+//            ClockDisplay.display("P2!");
+//        } else {
+//            ClockDisplay.display("1=2");
+//        }
         return true;
     } else {
         return false;
@@ -174,4 +214,3 @@ float _GameMode::goalEnergy()
 {
     return _difficulty * GAME_LEVEL_ENERGY_STEP;
 }
-

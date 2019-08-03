@@ -4,7 +4,6 @@
 #include "DualButton.h"
 #include "Config.h"
 
-DebouncedButton ResetButtonWired(RESET_BUTTON_PIN);
-DebouncedButton ResetButtonRadio(RESET_RADIO_PIN, false);
+DebouncedButton ResetButtonWired(RESET_BUTTON_PIN, true);
+DebouncedButton ResetButtonRadio(RESET_RADIO_PIN, true);
 DualButton ResetButton(&ResetButtonWired, &ResetButtonRadio);
-

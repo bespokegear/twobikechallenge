@@ -52,7 +52,10 @@ void _WaitMode::modeUpdate()
         Serial.print(F("Level="));
         Serial.println(d);
         ClockDisplay.display('L', (d/10)%10, d%10);
+        // Also want to display this on the LEDs
+        // ***** To Do *****
+        
+        
         _modeSelect = true;
     }
 }
-

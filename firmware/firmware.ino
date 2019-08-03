@@ -7,8 +7,19 @@
 //                                                            //
 // Author:              Mouse (Orthogonal Systems Ltd.)       //
 // Project Start Date:  2016-10-06                            //
+// "Adjusted" by:       Matt Little                           //
+// Date:                2019-8-3                              //    
 //                                                            //
 ////////////////////////////////////////////////////////////////
+
+
+// Notes on things changed:
+// Reset and Mode switchs have pull ups
+// Do not need timed version - just run untils max power is reached
+// Sorted out level adjustment
+// Added a serial output for reading by a computer to control external lights
+
+
 
 // Even though these libraries are only used in other sources, we
 // #include them here so the Ardino IDE knows to compile and link 
@@ -179,4 +190,3 @@ void loop()
         else if (mode == &GameMode) { switchMode(&WaitMode); }
     }
 }
-
