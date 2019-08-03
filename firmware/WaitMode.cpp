@@ -2,6 +2,7 @@
 #include "ModeButton.h"
 #include "ClockDisplay.h"
 #include "GameMode.h"
+#include "LED1.h"
 #include <Arduino.h>
 #include <EEPROM.h>
 
@@ -45,6 +46,7 @@ void _WaitMode::modeUpdate()
         Serial.println(F("WaitMode mode button pressed."));
 #endif
         uint8_t d = GameMode.getLevel();
+        uint16_t i;
         if (_modeSelect) {
             d = (d%GAME_LEVEL_MAX) + 1;
             GameMode.setLevel(d);
@@ -53,7 +55,13 @@ void _WaitMode::modeUpdate()
         Serial.println(d);
         ClockDisplay.display('L', (d/10)%10, d%10);
         // Also want to display this on the LEDs
-        // ***** To Do *****
+        
+        // Here the count down happens in red lights at the base of the LEDs
+        for (i=0; i<LED1_COUNT; i++) {
+            bool lit = d > i;
+            LED1.setPixelColor(i, lit ? LEVEL_COLOUR : P1_OFF_COLOR);
+        }
+        LED1.show();
         
         
         _modeSelect = true;

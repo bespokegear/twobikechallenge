@@ -39,6 +39,7 @@ void _CountdownMode::stop()
 
 void _CountdownMode::modeUpdate()
 {
+    uint16_t i;
     int8_t left = seconds();
 #ifdef DEBUG
     Serial.print(F("CountdownMode::modeUpdate() left="));
@@ -50,25 +51,38 @@ void _CountdownMode::modeUpdate()
             ClockDisplay.display(' ', left, ' ');
             Serial.print(F("Countdown: "));
             Serial.println(left);
+            // Here the count down happens in red lights at the base of the LEDs
+            for (i=0; i<LED1_COUNT; i++) {
+                bool lit = left > i;
+                LED1.setPixelColor(i, lit ? COUNTDOWN_COLOUR : P1_OFF_COLOR);
+            }
+            LED1.show();     
         } else {
             ClockDisplay.display("Go!");
             Serial.println(F("Go!"));
+            for (int i=LED1_COUNT-1; i>=0; i--) {
+                if (LED1.getPixelColor(i) != P1_OFF_COLOR) {
+                    LED1.setPixelColor(i, P1_OFF_COLOR);
+                    LED1.show();
+                    break;
+                }
+            }      
         }
     }
-    for (int i=LED1_COUNT-1; i>=0; i--) {
-        if (LED1.getPixelColor(i) != P1_OFF_COLOR) {
-            LED1.setPixelColor(i, P1_OFF_COLOR);
-            LED1.show();
-            break;
-        }
-    } 
-    for (int i=LED2_COUNT-1; i>=0; i--) {
-        if (LED2.getPixelColor(i) != P2_OFF_COLOR) {
-            LED2.setPixelColor(i, P2_OFF_COLOR);
-            LED2.show();
-            break;
-        }
-    } 
+//    for (int i=LED1_COUNT-1; i>=0; i--) {
+//        if (LED1.getPixelColor(i) != P1_OFF_COLOR) {
+//            LED1.setPixelColor(i, P1_OFF_COLOR);
+//            LED1.show();
+//            break;
+//        }
+//    } 
+//    for (int i=LED2_COUNT-1; i>=0; i--) {
+//        if (LED2.getPixelColor(i) != P2_OFF_COLOR) {
+//            LED2.setPixelColor(i, P2_OFF_COLOR);
+//            LED2.show();
+//            break;
+//        }
+//    } 
 }
 
 int8_t _CountdownMode::seconds()

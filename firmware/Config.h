@@ -53,6 +53,8 @@
 #define LED_UPDATE_DELAY_MS         100
 
 // GameMode parameters
+#define COUNTDOWN_COLOUR            0x00FF00UL
+#define LEVEL_COLOUR                0x0000FFUL
 #define P1_ON_COLOR                 0xFFFFFFUL
 #define P1_OFF_COLOR                0x000000UL
 #define P2_ON_COLOR                 0x00FF00UL
@@ -64,7 +66,7 @@
 // Running machine Parameters  
 
 // Other mode settings
-#define COUNTDOWN_SECONDS           2
+#define COUNTDOWN_SECONDS           5
 
 
 //#define DEBUG                       true
