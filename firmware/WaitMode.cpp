@@ -51,19 +51,22 @@ void _WaitMode::modeUpdate()
             d = (d%GAME_LEVEL_MAX) + 1;
             GameMode.setLevel(d);
         }
-        Serial.print(F("Level="));
-        Serial.println(d);
+        #ifdef DEBUG_MINIMAL
+          Serial.print(F("Level="));
+          Serial.println(d);
+        #endif
         ClockDisplay.display('L', (d/10)%10, d%10);
         // Also want to display this on the LEDs
         
         // Here the count down happens in red lights at the base of the LEDs
         for (i=0; i<LED1_COUNT; i++) {
             bool lit = d > i;
-            LED1.setPixelColor(i, lit ? LEVEL_COLOUR : P1_OFF_COLOR);
+            for (int n = LED_BLOCK; n>=0 ; n--)
+            {
+               LED1.setPixelColor((i*LED_BLOCK)+n, lit ? LEVEL_COLOUR : P1_OFF_COLOR);
+            }
         }
-        LED1.show();
-        
-        
+        LED1.show();  
         _modeSelect = true;
     }
 }

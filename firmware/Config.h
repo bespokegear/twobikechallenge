@@ -31,6 +31,7 @@
 #define SCLK_PIN                    11
 #define SDATA_PIN                   12
 #define EEPROM_LEVEL_ADDRESS        0
+#define BOX_ID                      1   // This is the box ID
 
 // Button feel settings
 #define DEBOUNCED_BUTTON_THRESHOLD      5
@@ -48,9 +49,10 @@
 #define LED1_BRIGHTNESS             255
 #define LED2_TYPE                   (NEO_GRB + NEO_KHZ800)
 #define LED2_DATA_PIN               6
-#define LED2_COUNT                  109
+#define LED2_COUNT                  5
 #define LED2_BRIGHTNESS             255
-#define LED_UPDATE_DELAY_MS         100
+#define LED_UPDATE_DELAY_MS         50
+#define LED_BLOCK                   20    // This is the number of LEDs in a 'block
 
 // GameMode parameters
 #define COUNTDOWN_COLOUR            0x00FF00UL
@@ -64,9 +66,12 @@
 #define GAME_LENGTH_SECONDS         30
 
 // Running machine Parameters  
+#define POWER_DISPLAY_MS            500   // How often to display power data
 
 // Other mode settings
 #define COUNTDOWN_SECONDS           5
 
 
-//#define DEBUG                       true
+//#define DEBUG                       true  // For all Debug
+//#define DEBUG_MINIMAL                 true  // For minimal debug
+#define JSON_OUTPUT                   true   // for JSON string output 

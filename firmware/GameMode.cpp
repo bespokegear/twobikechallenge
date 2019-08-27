@@ -40,6 +40,7 @@ void _GameMode::start()
     _startMillis = millis();
     _lastUpdate = _startMillis;
     _lastLEDUpdate = _startMillis;
+    finish_flag=false;
     writePixels();
 }
 
@@ -57,17 +58,16 @@ void _GameMode::reset()
 
 void _GameMode::modeUpdate()
 {
-
-  
     float elapsed = (millis() - _lastUpdate) / 1000.;
     _lastUpdate = millis();
-    
+      
     float vIn1 = PEDAL1_FUDGE_FACTOR + Pedal1Vin.get();
     float vIn2 = PEDAL2_FUDGE_FACTOR + Pedal2Vin.get();
     float power1 = vIn1 > PEDAL1_THRESHOLD ? vIn1*vIn1/PEDAL1_DUMP_R : 0; // P = (V^2)/R
     float power2 = vIn2 > PEDAL2_THRESHOLD ? vIn2*vIn2/PEDAL2_DUMP_R : 0; // P = (V^2)/R
     _energy1 += (power1 * elapsed);
     _energy2 += (power2 * elapsed);
+    
 #ifdef DEBUG
     Serial.print(F("Game elapsed="));
     Serial.print(elapsed);
@@ -87,6 +87,33 @@ void _GameMode::modeUpdate()
         writePixels();
         _lastLEDUpdate = _lastUpdate;
     }
+    // Here I want to display the power and energy totals
+    // Use power 1 + power 2 and energy 1 + energy 2
+    // Only want to do this every 500mS or so
+    if  (millis()>(_powerUpdate + POWER_DISPLAY_MS) || finish_flag==true){
+      _powerUpdate = millis();
+      #ifdef DEBUG_MINIMAL
+        Serial.print(F("Time="));
+        Serial.print((millis()- _startMillis)/1000.);
+        Serial.print(F(" P="));
+        Serial.print(power1+power2);
+        Serial.print(F(" E="));
+        Serial.println(_energy1+_energy2);  
+      #endif
+      #ifdef JSON_OUTPUT 
+        Serial.print(F("{\"box\":"));   
+        Serial.print(BOX_ID);
+        Serial.print(F(",\"Time\":"));           
+        Serial.print((millis()- _startMillis)/1000.);
+        Serial.print(F(",\"Power\":"));
+        Serial.print(power1+power2);
+        Serial.print(F(",\"Energy\":"));
+        Serial.print(_energy1+_energy2);       
+        Serial.print(F(",\"Lights\":"));
+        Serial.print(total_lights_lit);  
+        Serial.println("}");
+      #endif     
+    } 
 }
 
 void _GameMode::enterBrownout()
@@ -125,64 +152,56 @@ void _GameMode::writePixels()
     uint16_t i;
     bool lit;
     uint16_t lights_lit;
- 
-       
-    // OLD Code
-//    for (i=0; i<LED1_COUNT; i++) {
-//        bool lit = ((_energy1*LED1_COUNT) / goalEnergy()) > i;
-//        LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
-//    }
-//    for (i=0; i<LED2_COUNT; i++) {
-//        bool lit = ((_energy2*LED2_COUNT) / goalEnergy()) > i;
-//        LED2.setPixelColor(i, lit ? P2_ON_COLOR : P2_OFF_COLOR);
-//    }
-//    LED1.show();
-//    LED2.show();
+    
     // Just using LED1 to show both energy together
     lights_lit = 0;
-    for (i=0; i<LED1_COUNT; i++) {
+    for (i=1; i<LED1_COUNT+1; i++) {
         bool lit = (((_energy1+_energy2)*LED1_COUNT) / goalEnergy()) > i;
         if(lit == 1){
           lights_lit++;
         }
-        LED1.setPixelColor(i, lit ? P1_ON_COLOR : P1_OFF_COLOR);
+        for (int n = LED_BLOCK; n>=0 ; n--)
+        {
+           LED1.setPixelColor(((i-1)*LED_BLOCK)+n, lit ? P1_ON_COLOR : P1_OFF_COLOR);
+        }
     }
     LED1.show();   
     // This section outputs the lights to be lit
     if(lights_lit != old_lights_lit) {
-      Serial.print(F("Light:"));
-      Serial.println(lights_lit);
+      #ifdef DEBUG_MINIMAL
+        Serial.print(F("Light:"));
+        Serial.println(lights_lit);
+      #endif 
       old_lights_lit = lights_lit;
-    }      
+      total_lights_lit = lights_lit;
+    }    
 }
 
 bool _GameMode::isFinished()
 {
     // Game is finished when energy is greater than energy max
-    if ( (_energy1 + _energy2) > (GAME_LEVEL_ENERGY_STEP * _difficulty)) {
+    if ( (_energy1 + _energy2) > (goalEnergy()+5) ) {
         // Enter here when game finished
+        finish_flag=true;
+        modeUpdate();
         // Serial print the energy from each player
         #ifdef DEBUG
           Serial.print(F("P1 Energy: "));
           Serial.print(_energy1);
           Serial.print(F(" P2 Energy: "));
           Serial.println(_energy2);
-        #endif        
-
-        // Output data for analysis
-        Serial.print(F("P1 Energy: "));
-        Serial.print(_energy1);
-        Serial.print(F(" P2 Energy: "));
-        Serial.println(_energy2);  
+        #endif   
+             
+        #ifdef DEBUG_MINIMAL
+          // Output data for analysis
+          Serial.print(F("P1 Energy: "));
+          Serial.print(_energy1);
+          Serial.print(F(" P2 Energy: "));
+          Serial.println(_energy2);  
+        #endif
+           
         old_lights_lit = 0;
-        
-//        if (_energy1 > _energy2) {
-//            ClockDisplay.display("P1!");
-//        } else if (_energy2 > _energy1) {
-//            ClockDisplay.display("P2!");
-//        } else {
-//            ClockDisplay.display("1=2");
-//        }
+        total_lights_lit = 0;
         return true;
     } else {
         return false;

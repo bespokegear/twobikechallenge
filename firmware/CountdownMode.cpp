@@ -49,40 +49,41 @@ void _CountdownMode::modeUpdate()
         _lastSent = left;
         if (left > 0) {
             ClockDisplay.display(' ', left, ' ');
-            Serial.print(F("Countdown: "));
-            Serial.println(left);
+            #ifdef DEBUG_MINIMAL
+              Serial.print(F("Countdown: "));
+              Serial.println(left);
+            #endif
+              
             // Here the count down happens in red lights at the base of the LEDs
             for (i=0; i<LED1_COUNT; i++) {
                 bool lit = left > i;
-                LED1.setPixelColor(i, lit ? COUNTDOWN_COLOUR : P1_OFF_COLOR);
+                for (int n = LED_BLOCK; n>=0 ; n--)
+                {
+                  LED1.setPixelColor((i*LED_BLOCK)+n, lit ? COUNTDOWN_COLOUR : P1_OFF_COLOR);
+                }
             }
-            LED1.show();     
+            LED1.show(); 
+            #ifdef JSON_OUTPUT 
+              Serial.print(F("{\"box\":"));   
+              Serial.print(BOX_ID);
+              Serial.print(F(",\"Countdown\":"));           
+              Serial.print(left);
+              Serial.println("}");
+            #endif 
+
+                
         } else {
             ClockDisplay.display("Go!");
-            Serial.println(F("Go!"));
-            for (int i=LED1_COUNT-1; i>=0; i--) {
-                if (LED1.getPixelColor(i) != P1_OFF_COLOR) {
-                    LED1.setPixelColor(i, P1_OFF_COLOR);
-                    LED1.show();
-                    break;
-                }
-            }      
+             #ifdef DEBUG_MINIMAL
+                Serial.println(F("Go!"));
+             #endif 
+            for (int n = LED_BLOCK; n>=0 ; n--)
+            {
+                LED1.setPixelColor(n, P1_OFF_COLOR);
+            }
+            LED1.show();      
         }
     }
-//    for (int i=LED1_COUNT-1; i>=0; i--) {
-//        if (LED1.getPixelColor(i) != P1_OFF_COLOR) {
-//            LED1.setPixelColor(i, P1_OFF_COLOR);
-//            LED1.show();
-//            break;
-//        }
-//    } 
-//    for (int i=LED2_COUNT-1; i>=0; i--) {
-//        if (LED2.getPixelColor(i) != P2_OFF_COLOR) {
-//            LED2.setPixelColor(i, P2_OFF_COLOR);
-//            LED2.show();
-//            break;
-//        }
-//    } 
 }
 
 int8_t _CountdownMode::seconds()
